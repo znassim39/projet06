@@ -1,5 +1,6 @@
 package com.salimahafirassou.paymybuddy.controller;
 
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.salimahafirassou.paymybuddy.domain.Transaction;
+import com.salimahafirassou.paymybuddy.dto.TransactionToBuddyDTO;
 import com.salimahafirassou.paymybuddy.service.TransactionService;
 
 
@@ -21,9 +23,16 @@ public class TransactionController {
 	@Autowired
 	TransactionService transactionService;
 	
-	@GetMapping("")	
-	public Set<Transaction> addUserAccount(@RequestParam Long idUser) {
-		return null;
+	@PostMapping("")	
+	public String payMyBuddy(@RequestBody TransactionToBuddyDTO transationDTO) {
+		
+		Long idCredited = transationDTO.getIdCredited(); 
+		Long idDebited = transationDTO.getIdDebited(); 
+		Float Solt = transationDTO.getSolt(); 
+
+		transactionService.transactionToBuddy(idCredited, idDebited, Solt);
+
+		return "Buddy paied";
 		
 	}
 }

@@ -18,16 +18,16 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(
-	name="user",
+	name="user_account",
 	uniqueConstraints = {
-		@UniqueConstraint(name = "user_unique", columnNames = {"email", "passWord"})
+		@UniqueConstraint(name = "user_unique", columnNames = {"email"})
 	}
 )
 public class User {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id", columnDefinition = "serial")
 	private Long id;
 	
 	@Column(name="firstName")
