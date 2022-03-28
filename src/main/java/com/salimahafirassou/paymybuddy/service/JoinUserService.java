@@ -2,11 +2,11 @@ package com.salimahafirassou.paymybuddy.service;
 
 import java.util.List;
 
-import com.salimahafirassou.paymybuddy.domain.User;
+import com.salimahafirassou.paymybuddy.domain.UserEntity;
 
 public interface JoinUserService {
 
-	public void addBuddy( User user, String email) throws Exception;
+	public void addBuddy( UserEntity user, String email) throws Exception;
 	public void deleteBuddy(String email);
-	public List<User> listMyBudies (Long id);
+	public List<UserEntity> listMyBudies (Long id);
 }

@@ -6,23 +6,25 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.salimahafirassou.paymybuddy.domain.User;
+import com.salimahafirassou.paymybuddy.domain.UserEntity;
 import com.salimahafirassou.paymybuddy.repository.UserRepository;
 
+@Service
 public class JoinUserServiceImpl implements JoinUserService{
 
 	@Autowired
 	UserRepository userRepository;
 	
 	@Override
-	public void addBuddy(User user, String email) throws Exception {
+	public void addBuddy(UserEntity user, String email) throws Exception {
 			
 			if (! userRepository.findUserByEmail(email).isEmpty()) {
 				throw new Exception("The User with the given eamil doesn't exists");
 			}
-			Optional<User> us =userRepository.findUserByEmail(email);
-			user.getBuddies().add(user);
+			Optional<UserEntity> us =userRepository.findUserByEmail(email);
+			// user.getBuddies().add(user);
 			Map<String,String> resultMap =new HashMap<String,String>();
 			resultMap.put("message", "FireStation created successfully");
 	}
@@ -34,7 +36,7 @@ public class JoinUserServiceImpl implements JoinUserService{
 	}
 
 	@Override
-	public List<User> listMyBudies(Long id) {
+	public List<UserEntity> listMyBudies(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

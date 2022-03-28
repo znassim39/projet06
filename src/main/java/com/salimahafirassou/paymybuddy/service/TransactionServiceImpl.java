@@ -3,8 +3,12 @@ package com.salimahafirassou.paymybuddy.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import Utils.TypeTransaction;
+
+import java.util.Date;
+
 import com.salimahafirassou.paymybuddy.domain.Transaction;
-import com.salimahafirassou.paymybuddy.domain.User;
+import com.salimahafirassou.paymybuddy.domain.UserEntity;
 import com.salimahafirassou.paymybuddy.repository.TransactionRepository;
 import com.salimahafirassou.paymybuddy.repository.UserRepository;
 
@@ -18,22 +22,45 @@ public class TransactionServiceImpl implements TransactionService {
 	UserRepository userRepository;
 	
 	@Override
-	public void transferToUserAccount(User user, Float solt) {
-		// TODO Auto-generated method stub
-		
+	public void transferToUserAccount(Long idUser, Float solt) {
+		/*UserEntity user = userRepository.getById(idUser);
+
+		user.setBalance(user.getBalance() + solt);
+		userRepository.save(user);
+
+		Transaction transaction = new Transaction();
+		transaction.setDebited(user);
+		transaction.setCredeted(user);
+		transaction.setAmount(solt);
+		transaction.setTypeTransaction(TypeTransaction.TRANSFERTOUSERACCOUNT);
+		transaction.setPaymentDate(new Date());
+		transactionRepository.save(transaction);*/
 	}
 
 	@Override
-	public void transferToBankAccount(User use, Float solt) {
-		// TODO Auto-generated method stub
-		
+	public void transferToBankAccount(Long idUser, Float solt) {
+		/*UserEntity user = userRepository.getById(idUser);
+
+		if (user.getBalance() >= solt){
+			
+			user.setBalance(user.getBalance() - solt);
+			userRepository.save(user);
+
+			Transaction transaction = new Transaction();
+			transaction.setDebited(user);
+			transaction.setCredeted(user);
+			transaction.setAmount(solt);
+			transaction.setTypeTransaction(TypeTransaction.TRANSFERTOBANKACCOUNT);
+			transaction.setPaymentDate(new Date());
+			transactionRepository.save(transaction);
+		}*/
 	}
 
 	@Override
 	public void transactionToBuddy(Long idDebited, Long idCredited, Float Solt) {
 
-		User debited = userRepository.getById(idDebited);
-		User credited = userRepository.getById(idCredited);
+		/*UserEntity debited = userRepository.getById(idDebited);
+		UserEntity credited = userRepository.getById(idCredited);
 		
 		if (debited.getBalance() >= Solt){
 
@@ -47,8 +74,10 @@ public class TransactionServiceImpl implements TransactionService {
 			transaction.setDebited(debited);
 			transaction.setCredeted(credited);
 			transaction.setAmount(Solt);
+			transaction.setTypeTransaction(TypeTransaction.TRANSFERTOBUDDY);
+			transaction.setPaymentDate(new Date());
 			transactionRepository.save(transaction);
-		}
+		}*/
 	}
 
 }

@@ -2,19 +2,15 @@ package com.salimahafirassou.paymybuddy.domain;
 
 import java.util.Date;
 
-import static javax.persistence.GenerationType.SEQUENCE;
+import static javax.persistence.GenerationType.AUTO;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import Utils.TypeTransaction;
 
 @Entity
 @Table(
@@ -23,8 +19,10 @@ import Utils.TypeTransaction;
 public class Transaction {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id", columnDefinition = "serial")
+    @GeneratedValue(
+            strategy = AUTO
+    )
+	@Column(name="id")
 	private Long id;
 
 	@ManyToOne(
@@ -34,16 +32,16 @@ public class Transaction {
 	@JoinColumn(
             name = "idCredeted"
     )
-	private User credeted;
+	private UserEntity credeted;
 	
 	@ManyToOne(
             fetch = FetchType.EAGER,
-            optional = false
+            optional = true
     )
 	@JoinColumn(
             name = "idDebited"
     )
-	private User debited;
+	private UserEntity debited;
 	
 	@Column(name="payment_date")
 	private Date paymentDate;
@@ -56,7 +54,7 @@ public class Transaction {
 
 	public Transaction() {};
 	
-	public Transaction(Long id, User credeted, User debited, Date paymentDate, Float amount,
+	public Transaction(Long id, UserEntity credeted, UserEntity debited, Date paymentDate, Float amount,
 			String typeTransaction) {
 		this.id = id;
 		this.credeted = credeted;
@@ -66,7 +64,7 @@ public class Transaction {
 		this.typeTransaction = typeTransaction;
 	}
 
-	public Transaction(User credeted, User debited, Date paymentDate, Float amount,
+	public Transaction(UserEntity credeted, UserEntity debited, Date paymentDate, Float amount,
 				String typeTransaction) {
 		this.credeted = credeted;
 		this.debited = debited;
@@ -84,11 +82,11 @@ public class Transaction {
 	public Long getId() { return id; }
 	public void setId(Long id) { this.id = id; }
 	
-	public User getCredeted() { return credeted; }
-	public void setCredeted(User credeted) { this.credeted = credeted; }
+	public UserEntity getCredeted() { return credeted; }
+	public void setCredeted(UserEntity credeted) { this.credeted = credeted; }
 	
-	public User getDebited() { return debited; }
-	public void setDebited(User debited) { this.debited = debited; }
+	public UserEntity getDebited() { return debited; }
+	public void setDebited(UserEntity debited) { this.debited = debited; }
 	
 	public Date getPaymentDate() { return paymentDate; }
 	public void setPaymentDate(Date paymentDate) { this.paymentDate = paymentDate; }

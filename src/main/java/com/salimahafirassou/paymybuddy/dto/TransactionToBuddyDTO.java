@@ -4,7 +4,8 @@ public class TransactionToBuddyDTO {
 
     private Long idCredited; 
     private Long idDebited; 
-    private Float Solt;
+    private Float solt;
+
     public Long getIdCredited() {
         return idCredited;
     }
@@ -18,10 +19,10 @@ public class TransactionToBuddyDTO {
         this.idDebited = idDebited;
     }
     public Float getSolt() {
-        return Solt;
+        return solt;
     }
     public void setSolt(Float solt) {
-        Solt = solt;
+        this.solt = solt;
     }
     
     
