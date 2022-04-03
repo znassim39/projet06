@@ -1,29 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-  <meta charset="utf-8">
-    <!-- Test it -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Java Dev Journal | Registration Page</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet"  th:href="@{/plugins/fontawesome-free/css/all.min.css}">
-    <!-- Ionicons
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">-->
-    <!-- icheck bootstrap -->
-    <link rel="stylesheet" th:href="@{/plugins/icheck-bootstrap/icheck-bootstrap.min.css}">
-    <!-- Theme style -->
-    <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
-    <!-- Google Font: Source Sans Pro -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"> 
-</head>
+<head th:replace="head :: head">  <meta charset="utf-8">
 <body class="hold-transition register-page">
-<div class="register-box">
-    <div class="register-logo">
-        <a href="#">Welcome to Spring Security Course</a>
-    </div>
+<div class="container">
   <div class="col-md-12">
   </div>
     <div class="card">
@@ -40,7 +19,7 @@
                            th:errorclass="is-invalid">
                     <div class="input-group-append">
                         <div class="input-group-text">
-                            <span class="fas fa-user"></span>
+                            <span class="fa fa-user"></span>
                         </div>
                     </div>
                 </div>
@@ -50,7 +29,7 @@
 
                     <div class="input-group-append">
                         <div class="input-group-text">
-                            <span class="fas fa-user"></span>
+                            <span class="fa fa-user"></span>
                         </div>
                     </div>
                 </div>
@@ -60,7 +39,7 @@
 
                     <div class="input-group-append">
                         <div class="input-group-text">
-                            <span class="fas fa-envelope"></span>
+                            <span class="fa fa-envelope"></span>
                         </div>
                     </div>
                 </div>
@@ -70,7 +49,7 @@
 
                     <div class="input-group-append">
                         <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
+                            <span class="fa fa-lock"></span>
                         </div>
                     </div>
                 </div>
@@ -78,7 +57,7 @@
                     <input type="password" class="form-control" placeholder="Retype password">
                     <div class="input-group-append">
                         <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
+                            <span class="fa fa-lock"></span>
                         </div>
                     </div>
                 </div>
@@ -96,24 +75,6 @@
         <!-- /.form-box -->
     </div><!-- /.card -->
 </div>
-<!-- /.register-box -->
 
-<!-- jQuery -->
-<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
-<!-- Bootstrap 4 -->
-<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
-<!-- AdminLTE App -->
-<script th:src="@{/dist/js/adminlte.min.js}"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#locale").change(function () {
-            var selectedOption = $('#locale').val();
-            if (selectedOption != '') {
-                window.location.replace('?lang=' + selectedOption);
-            }
-        });
-    });
-
-</script>
 </body>
 </html>

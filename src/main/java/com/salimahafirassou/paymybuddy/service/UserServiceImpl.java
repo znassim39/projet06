@@ -5,15 +5,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 import com.salimahafirassou.paymybuddy.domain.UserEntity;
 import com.salimahafirassou.paymybuddy.dto.UserDto;
+import com.salimahafirassou.paymybuddy.dto.UserLoginDto;
 import com.salimahafirassou.paymybuddy.exception.UserAlreadyExistException;
+import com.salimahafirassou.paymybuddy.exception.UserDoesNotExistsException;
 import com.salimahafirassou.paymybuddy.repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
 	
-	@Autowired
+	private static final String Optional = null;
+    @Autowired
     private UserRepository userRepository;
 
 	// @Autowired
@@ -30,6 +35,17 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(user, userEntity);
         // encodePassword(userEntity, user);
         userRepository.save(userEntity);
+    }
+
+    @Override
+    public boolean login(UserLoginDto user) throws UserDoesNotExistsException {
+        
+        Optional<UserEntity> existing_user = userRepository.findUserByEmail(user.getEmail());
+        if (existing_user.isEmpty()) {
+            throw new UserDoesNotExistsException("User does not exist");
+        }
+
+        return existing_user.get().getPassword() == user.getPassword();
     }
 
 
