@@ -52,25 +52,30 @@ public class Transaction {
 	@Column(name="typeTransaction")
 	private String typeTransaction;
 
+	@Column(name="description")
+	private String description;
+
 	public Transaction() {};
 	
 	public Transaction(Long id, UserEntity credeted, UserEntity debited, Date paymentDate, Float amount,
-			String typeTransaction) {
+			String typeTransaction, String description) {
 		this.id = id;
 		this.credeted = credeted;
 		this.debited = debited;
 		this.paymentDate = paymentDate;
 		this.amount = amount;
 		this.typeTransaction = typeTransaction;
+		this.description = description;
 	}
-
+	
 	public Transaction(UserEntity credeted, UserEntity debited, Date paymentDate, Float amount,
-				String typeTransaction) {
+				String typeTransaction, String description) {
 		this.credeted = credeted;
 		this.debited = debited;
 		this.paymentDate = paymentDate;
 		this.amount = amount;
 		this.typeTransaction = typeTransaction;
+		this.description = description;
 	}
 	public Float getAmount() {
 		return amount;
@@ -93,5 +98,8 @@ public class Transaction {
 	
 	public String getTypeTransaction() { return typeTransaction; }
 	public void setTypeTransaction(String typeTransaction) { this.typeTransaction = typeTransaction; }
+
+	public String getDescription() { return description; }
+	public void setDescription(String description) { this.description = description; }
 	
 }

@@ -10,4 +10,5 @@ public interface UserService {
     void register(final UserDto user) throws UserAlreadyExistException;
     boolean login(final UserLoginDto user) throws UserDoesNotExistsException;
     boolean checkIfUserExist(final String email);
+    boolean checkConnected(final String email) throws UserDoesNotExistsException;
 }

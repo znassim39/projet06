@@ -16,8 +16,7 @@ import com.salimahafirassou.paymybuddy.repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
-	
-	private static final String Optional = null;
+    
     @Autowired
     private UserRepository userRepository;
 
@@ -44,14 +43,29 @@ public class UserServiceImpl implements UserService {
         if (existing_user.isEmpty()) {
             throw new UserDoesNotExistsException("User does not exist");
         }
+        UserEntity loginUser = existing_user.get();
 
-        return existing_user.get().getPassword() == user.getPassword();
+        if (loginUser.getPassword().equals(user.getPassword())) {
+            loginUser.setConnected(true);
+            userRepository.save(loginUser);
+            return true;
+        }
+        return false;
     }
 
 
     @Override
     public boolean checkIfUserExist(String email) {
         return userRepository.findUserByEmail(email).isPresent();
+    }
+
+    @Override
+    public boolean checkConnected(String email) throws UserDoesNotExistsException {
+        Optional<UserEntity> existing_user = userRepository.findUserByEmail(email);
+        if (existing_user.isEmpty()) {
+            throw new UserDoesNotExistsException("User does not exist");
+        }
+        return existing_user.get().getConnected();
     }
 
     // private void encodePassword( UserEntity userEntity, UserDto user){

@@ -12,7 +12,7 @@ import com.salimahafirassou.paymybuddy.domain.Transaction;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long>{
 
-	@Query("SELECT t FROM Transaction t join t.credeted c WHERE c.id = :idCredeted")
-	List<Transaction> findTransactionByUser(@Param("idCredeted") Long idCredeted);
+	@Query("SELECT t FROM Transaction t join t.credeted c join t.debited d WHERE c.id = :idUser or d.id = :idUser")
+	List<Transaction> findTransactionByUser(@Param("idUser") Long idUser);
 
 }

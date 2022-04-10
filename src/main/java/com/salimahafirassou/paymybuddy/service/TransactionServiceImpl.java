@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import Utils.TypeTransaction;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 import com.salimahafirassou.paymybuddy.domain.Transaction;
 import com.salimahafirassou.paymybuddy.domain.UserEntity;
@@ -22,50 +24,57 @@ public class TransactionServiceImpl implements TransactionService {
 	UserRepository userRepository;
 	
 	@Override
-	public void transferToUserAccount(Long idUser, Float solt) {
-		/*UserEntity user = userRepository.getById(idUser);
+	public void transferToUserAccount(String user_email, Float amount) {
+		Optional<UserEntity> existing_user = userRepository.findUserByEmail(user_email);
 
-		user.setBalance(user.getBalance() + solt);
+		UserEntity user = existing_user.get();
+
+		user.setBalance(user.getBalance() + amount);
 		userRepository.save(user);
 
 		Transaction transaction = new Transaction();
 		transaction.setDebited(user);
 		transaction.setCredeted(user);
-		transaction.setAmount(solt);
+		transaction.setAmount(amount);
 		transaction.setTypeTransaction(TypeTransaction.TRANSFERTOUSERACCOUNT);
 		transaction.setPaymentDate(new Date());
-		transactionRepository.save(transaction);*/
+		transactionRepository.save(transaction);
 	}
 
 	@Override
-	public void transferToBankAccount(Long idUser, Float solt) {
-		/*UserEntity user = userRepository.getById(idUser);
+	public void transferToBankAccount(String user_email, Float amount) {
+		Optional<UserEntity> existing_user = userRepository.findUserByEmail(user_email);
 
-		if (user.getBalance() >= solt){
+		UserEntity user = existing_user.get();
+
+		if (user.getBalance() >= amount){
 			
-			user.setBalance(user.getBalance() - solt);
+			user.setBalance(user.getBalance() - amount);
 			userRepository.save(user);
 
 			Transaction transaction = new Transaction();
 			transaction.setDebited(user);
 			transaction.setCredeted(user);
-			transaction.setAmount(solt);
+			transaction.setAmount(amount);
 			transaction.setTypeTransaction(TypeTransaction.TRANSFERTOBANKACCOUNT);
 			transaction.setPaymentDate(new Date());
 			transactionRepository.save(transaction);
-		}*/
+		}
 	}
 
 	@Override
-	public void transactionToBuddy(Long idDebited, Long idCredited, Float Solt) {
-
-		/*UserEntity debited = userRepository.getById(idDebited);
-		UserEntity credited = userRepository.getById(idCredited);
+	public void transactionToBuddy(String debited_email, String credited_email, Float amount, String description) {
 		
-		if (debited.getBalance() >= Solt){
+		Optional<UserEntity> existing_debited = userRepository.findUserByEmail(debited_email);
+		UserEntity debited = existing_debited.get();
+		
+		Optional<UserEntity> existing_credited = userRepository.findUserByEmail(credited_email);
+		UserEntity credited = existing_credited.get();
+		
+		if (debited.getBalance() >= amount){
 
-			debited.setBalance(debited.getBalance() - Solt);
-			credited.setBalance(credited.getBalance() + Solt);
+			debited.setBalance(debited.getBalance() - amount);
+			credited.setBalance(credited.getBalance() + amount);
 
 			userRepository.save(credited);
 			userRepository.save(debited);
@@ -73,11 +82,22 @@ public class TransactionServiceImpl implements TransactionService {
 			Transaction transaction = new Transaction();
 			transaction.setDebited(debited);
 			transaction.setCredeted(credited);
-			transaction.setAmount(Solt);
+			transaction.setAmount(amount);
+			transaction.setDescription(description);
 			transaction.setTypeTransaction(TypeTransaction.TRANSFERTOBUDDY);
 			transaction.setPaymentDate(new Date());
 			transactionRepository.save(transaction);
-		}*/
+		}
+	}
+
+	@Override
+	public List<Transaction> getTransactionsByUser(String user_email) {
+
+		Optional<UserEntity> existing_user = userRepository.findUserByEmail(user_email);
+
+		UserEntity user = existing_user.get();
+
+		return transactionRepository.findTransactionByUser(user.getId());
 	}
 
 }

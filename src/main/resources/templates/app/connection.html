@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="head :: head">  <meta charset="utf-8">
+<body class="hold-transition register-page">
+<div class="container m-5">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4 card">
+            <div class="card-body register-card-body">
+                <div class="row mb-5">
+                    <div class="col-4"></div>
+                    <div class="col-4 btn btn-success">
+                        Create connection
+                    </div>
+                    <div class="col-4"></div>
+                </div>
+                <div class="row mt-5">
+                    <form action="#" th:action="@{/connection}" th:object="${connectionDto}" method="post">
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" th:field="*{buddy_email}" placeholder="Email"
+                                th:errorclass="is-invalid">
+
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fa fa-envelope"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4"></div>
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-primary">Create connection</button>
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                    </form>
+                </div>
+                <a href="home" class="text-center">Cancel</a>
+            </div>
+            <!-- /.form-box -->
+        </div><!-- /.card -->
+        <div class="col-4"></div>
+    </div>
+</div>
+
+</body>
+</html>

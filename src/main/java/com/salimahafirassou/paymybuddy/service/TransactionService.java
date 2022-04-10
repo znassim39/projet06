@@ -1,9 +1,14 @@
 package com.salimahafirassou.paymybuddy.service;
 
+import java.util.List;
+
+import com.salimahafirassou.paymybuddy.domain.Transaction;
+
 public interface TransactionService {
 
-	public void transferToUserAccount(Long idUser, Float solt);
-	public void transferToBankAccount(Long idUser, Float solt);
-	public void transactionToBuddy(Long idDebited, Long idCredited, Float Solt);
+	public void transferToUserAccount(String user_email, Float amount);
+	public void transferToBankAccount(String user_email, Float amount);
+	public void transactionToBuddy(String debited_email, String credited_email, Float amount, String description);
+	public List<Transaction> getTransactionsByUser(String user_email);
 	
 }

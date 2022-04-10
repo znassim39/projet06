@@ -2,18 +2,11 @@ package com.salimahafirassou.paymybuddy.domain;
 
 import static javax.persistence.GenerationType.AUTO;
 
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -45,28 +38,33 @@ public class UserEntity {
 	@Column(name="password")
 	private String password;
 	
-	/*@Column(name="bankAccount")
+	@Column(name="bankAccount")
 	private String banckAccount;
 	
 	@Column(name="balance")
-	private Float balance;*/
+	private Double balance = 0.0;
+
+	@Column(name="connected")
+	private Boolean connected;
 	
 	public UserEntity() {
 	}
 	
-	public UserEntity(Long id, String firstName, String lastName, String email, String password) {
+	public UserEntity(Long id, String firstName, String lastName, String email, String password, Boolean connected) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
+		this.connected = connected;
 	}
 	
-	public UserEntity(String firstName, String lastName, String email, String password) {
+	public UserEntity(String firstName, String lastName, String email, String password, Boolean connected) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
+		this.connected = connected;
 	}
 	public Long getId() {
 		return id;
@@ -98,18 +96,25 @@ public class UserEntity {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	/*public String getBanckAccount() {
+	public String getBanckAccount() {
 		return banckAccount;
 	}
 	public void setBanckAccount(String banckAccount) {
 		this.banckAccount = banckAccount;
 	}
-	public Float getBalance() {
+	public Double getBalance() {
 		return balance;
 	}
-	public void setBalance(Float balance) {
+	public void setBalance(Double balance) {
 		this.balance = balance;
-	}*/
+	}
+
+	public Boolean getConnected() {
+		return connected;
+	}
+	public void setConnected(Boolean connected) {
+		this.connected = connected;
+	}
 	
 
 }
