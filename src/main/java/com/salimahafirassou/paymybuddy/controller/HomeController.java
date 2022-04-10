@@ -7,10 +7,10 @@ import java.util.Optional;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-import com.salimahafirassou.paymybuddy.domain.Transaction;
 import com.salimahafirassou.paymybuddy.domain.UserEntity;
 import com.salimahafirassou.paymybuddy.dto.CreateTransactionDto;
 import com.salimahafirassou.paymybuddy.dto.HomeDto;
+import com.salimahafirassou.paymybuddy.dto.TransactionTableDto;
 import com.salimahafirassou.paymybuddy.exception.UserDoesNotExistsException;
 import com.salimahafirassou.paymybuddy.service.BuddyService;
 import com.salimahafirassou.paymybuddy.service.TransactionService;
@@ -52,7 +52,7 @@ public class HomeController {
             }
 
             List<UserEntity> buddies = buddyService.listMyBudies(user_token.get());
-            List<Transaction> transactions = transactionService.getTransactionsByUser(user_token.get());
+            List<TransactionTableDto> transactions = transactionService.getTransactionsByUser(user_token.get());
             HomeDto homeDto = new HomeDto();
             homeDto.setConnections(buddies);
             homeDto.setTransactions(transactions);

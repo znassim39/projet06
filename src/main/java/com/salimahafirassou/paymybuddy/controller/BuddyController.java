@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.salimahafirassou.paymybuddy.dto.ConnectionDto;
+import com.salimahafirassou.paymybuddy.exception.UserDoesNotExistsException;
 import com.salimahafirassou.paymybuddy.service.BuddyService;
+import com.salimahafirassou.paymybuddy.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,9 @@ public class BuddyController {
 
     @Autowired
 	BuddyService buddyService;
+
+    @Autowired
+	UserService userService;
 
     @GetMapping("/connection")
     public String register(final Model model){
@@ -42,12 +47,18 @@ public class BuddyController {
             return "redirect:/login";
         }
         try {
+            if (!userService.checkConnected(user_token.get())){
+                return "redirect:/login";
+            }
             buddyService.addBuddy(
 				user_token.get(), 
 				connectionDto.getBuddy_email());
-        }catch (Exception e){
+        } catch (UserDoesNotExistsException e){
+            return "redirect:/login";
+        }
+        catch (Exception e){
             model.addAttribute("connectionDto", connectionDto);
-            return "redirect:/buddy";
+            return "app/connection";
         }
         return "redirect:/home";
     }

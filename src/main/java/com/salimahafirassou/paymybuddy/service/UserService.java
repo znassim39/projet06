@@ -11,4 +11,5 @@ public interface UserService {
     boolean login(final UserLoginDto user) throws UserDoesNotExistsException;
     boolean checkIfUserExist(final String email);
     boolean checkConnected(final String email) throws UserDoesNotExistsException;
+    void logout(final String email) throws UserDoesNotExistsException;
 }

@@ -5,12 +5,14 @@ import org.springframework.stereotype.Service;
 
 import Utils.TypeTransaction;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import com.salimahafirassou.paymybuddy.domain.Transaction;
 import com.salimahafirassou.paymybuddy.domain.UserEntity;
+import com.salimahafirassou.paymybuddy.dto.TransactionTableDto;
 import com.salimahafirassou.paymybuddy.repository.TransactionRepository;
 import com.salimahafirassou.paymybuddy.repository.UserRepository;
 
@@ -91,13 +93,30 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
-	public List<Transaction> getTransactionsByUser(String user_email) {
+	public List<TransactionTableDto> getTransactionsByUser(String user_email) {
 
 		Optional<UserEntity> existing_user = userRepository.findUserByEmail(user_email);
 
 		UserEntity user = existing_user.get();
 
-		return transactionRepository.findTransactionByUser(user.getId());
+		List<TransactionTableDto> transactions = new ArrayList<>();
+
+		transactionRepository.findTransactionByUser(user.getId()).forEach(transactionEntity -> {
+			TransactionTableDto transaction = new TransactionTableDto();
+			if (transactionEntity.getCredeted().getEmail().equals(user_email)){
+
+				transaction.setBuddy_name(transactionEntity.getDebited().getFirstName() + " " + transactionEntity.getDebited().getLastName());
+				transaction.setAmount(transactionEntity.getAmount());
+			} else {
+				transaction.setBuddy_name(transactionEntity.getCredeted().getFirstName() + " " + transactionEntity.getCredeted().getLastName());
+				transaction.setAmount(transactionEntity.getAmount() * -1);
+			}
+			transaction.setDescription(transactionEntity.getDescription());
+
+			transactions.add(transaction);
+		});
+
+		return transactions;
 	}
 
 }

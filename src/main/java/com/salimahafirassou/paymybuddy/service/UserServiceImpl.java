@@ -68,6 +68,20 @@ public class UserServiceImpl implements UserService {
         return existing_user.get().getConnected();
     }
 
+    @Override
+    public void logout(String email) throws UserDoesNotExistsException {
+        
+        Optional<UserEntity> existing_user = userRepository.findUserByEmail(email);
+        if (existing_user.isEmpty()) {
+            throw new UserDoesNotExistsException("User does not exist");
+        }
+        UserEntity loggedinUser = existing_user.get();
+
+        loggedinUser.setConnected(false);
+        userRepository.save(loggedinUser);
+        
+    }
+
     // private void encodePassword( UserEntity userEntity, UserDto user){
     //     userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
     // }

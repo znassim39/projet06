@@ -1,6 +1,10 @@
 package com.salimahafirassou.paymybuddy.controller;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -72,5 +76,36 @@ public class UserController {
             return "account/login";
         }
         return "redirect:/home";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response){
+
+        if (request.getCookies() == null) {
+            return "redirect:/login";
+        }
+        Optional<String> user_token = Arrays.stream(request.getCookies())
+                    .filter(cookie->"user_email".equals(cookie.getName()))
+                    .map(Cookie::getValue)
+                    .findAny();
+        try {
+            if (user_token.isEmpty()){
+                return "redirect:/login";
+            }
+            if (!userService.checkConnected(user_token.get())){
+                return "redirect:/login";
+            }
+
+            userService.logout(user_token.get());
+
+            Cookie token_cookie = new Cookie("user_email", null);
+            token_cookie.setMaxAge(0);
+            response.addCookie(token_cookie);
+
+        } catch (UserDoesNotExistsException e) {
+            return "redirect:/login";
+        }
+
+        return "redirect:/login";
     }
 }
