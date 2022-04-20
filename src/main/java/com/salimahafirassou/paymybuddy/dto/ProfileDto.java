@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
 
-public class UserDto implements Serializable {
+public class ProfileDto implements Serializable {
     @NotNull
     @NotEmpty(message = "firstName can not be empty")
     private String firstName;
@@ -16,16 +16,13 @@ public class UserDto implements Serializable {
     @NotEmpty(message = "lastName can not be empty")
     private String lastName;
     
-    @NotNull
-    @NotEmpty(message = "password can not be empty")
-    private String password;
-
+    private String oldPassword;
+    private String newPassword;
     private String confirmPassword;
     
-    @NotNull
-    @NotEmpty(message = "email can not be empty")
-    @Email(message = "email not valid")
     private String email;
+
+	private Double balance;
 
 	public String getFirstName() {
 		return firstName;
@@ -43,12 +40,24 @@ public class UserDto implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public String getOldPassword() {
+		return oldPassword;
+	}
+
+	public void setOldPassword(String oldPassword) {
+		this.oldPassword = oldPassword;
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
 	}
 
 	public String getConfirmPassword() {
@@ -59,12 +68,16 @@ public class UserDto implements Serializable {
 		this.confirmPassword = confirmPassword;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Double getBalance() {
+		return balance;
+	}
+
+	public void setBalance(Double balance) {
+		this.balance = balance;
 	}
     
     

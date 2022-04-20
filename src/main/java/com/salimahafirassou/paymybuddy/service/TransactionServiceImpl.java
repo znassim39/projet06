@@ -13,6 +13,7 @@ import java.util.Optional;
 import com.salimahafirassou.paymybuddy.domain.Transaction;
 import com.salimahafirassou.paymybuddy.domain.UserEntity;
 import com.salimahafirassou.paymybuddy.dto.TransactionTableDto;
+import com.salimahafirassou.paymybuddy.exception.UserDoesNotExistsException;
 import com.salimahafirassou.paymybuddy.repository.TransactionRepository;
 import com.salimahafirassou.paymybuddy.repository.UserRepository;
 
@@ -26,8 +27,12 @@ public class TransactionServiceImpl implements TransactionService {
 	UserRepository userRepository;
 	
 	@Override
-	public void transferToUserAccount(String user_email, Float amount) {
+	public void transferToUserAccount(String user_email, Float amount) throws UserDoesNotExistsException {
 		Optional<UserEntity> existing_user = userRepository.findUserByEmail(user_email);
+
+		if (existing_user.isEmpty()) {
+			throw new UserDoesNotExistsException("No user with email: " + user_email);
+		}
 
 		UserEntity user = existing_user.get();
 
@@ -44,8 +49,12 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
-	public void transferToBankAccount(String user_email, Float amount) {
+	public void transferToBankAccount(String user_email, Float amount) throws UserDoesNotExistsException {
 		Optional<UserEntity> existing_user = userRepository.findUserByEmail(user_email);
+
+		if (existing_user.isEmpty()) {
+			throw new UserDoesNotExistsException("No user with email: " + user_email);
+		}
 
 		UserEntity user = existing_user.get();
 
@@ -65,12 +74,19 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
-	public void transactionToBuddy(String debited_email, String credited_email, Float amount, String description) {
+	public void transactionToBuddy(String debited_email, String credited_email, Float amount, String description) 
+		throws UserDoesNotExistsException {
 		
 		Optional<UserEntity> existing_debited = userRepository.findUserByEmail(debited_email);
+		if (existing_debited.isEmpty()) {
+			throw new UserDoesNotExistsException("No user with email: " + debited_email);
+		}
 		UserEntity debited = existing_debited.get();
 		
 		Optional<UserEntity> existing_credited = userRepository.findUserByEmail(credited_email);
+		if (existing_credited.isEmpty()) {
+			throw new UserDoesNotExistsException("No user with email: " + credited_email);
+		}
 		UserEntity credited = existing_credited.get();
 		
 		if (debited.getBalance() >= amount){
@@ -93,9 +109,12 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
-	public List<TransactionTableDto> getTransactionsByUser(String user_email) {
+	public List<TransactionTableDto> getTransactionsByUser(String user_email) throws UserDoesNotExistsException {
 
 		Optional<UserEntity> existing_user = userRepository.findUserByEmail(user_email);
+		if (existing_user.isEmpty()) {
+			throw new UserDoesNotExistsException("No user with email: " + user_email);
+		}
 
 		UserEntity user = existing_user.get();
 

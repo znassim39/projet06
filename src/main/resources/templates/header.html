@@ -1,5 +1,5 @@
 <header>
-    <nav class="navbar navbar-expand-md navigation" style="background-color:#d0cfd1">
+    <nav class="navbar navbar-expand-md navigation">
         <div class="navbar-collapse collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
@@ -10,12 +10,21 @@
             </ul>
         </div>
         <div class="navbar-collapse collapse">
-            <ul class="navbar-nav ml-auto">
+            <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link" href="/home">Home</a>
+                    <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI().equals('/home') ? 'active':''}" href="/home">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
+                    <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI().equals('/transfer') ? 'active':''}" href="/transfer">Transfer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI().equals('/profile') ? 'active':''}" href="/profile">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI().equals('/connection') ? 'active':''}" href="/connection">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI().equals('/logout') ? 'active':''}" href="/logout">Log off</a>
                 </li>
             </ul>
         </div>

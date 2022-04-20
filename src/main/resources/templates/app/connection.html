@@ -1,50 +1,55 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="head :: head">  <meta charset="utf-8">
-<body class="hold-transition register-page">
-<div class="container m-5">
-    <div class="row">
-        <div class="col-4"></div>
-        <div class="col-4 card">
-            <div class="card-body register-card-body">
-                <div class="row mb-5">
-                    <div class="col-4"></div>
-                    <div class="col-4 btn btn-success">
-                        Create connection
-                    </div>
-                    <div class="col-4"></div>
-                </div>
-                <div class="row mt-5">
-                    <form action="#" th:action="@{/connection}" th:object="${connectionDto}" method="post">
-                        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
-                            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
-                        </div>
-                        <div class="input-group mb-3">
-                            <input type="email" class="form-control" th:field="*{buddy_email}" placeholder="Email"
-                                th:errorclass="is-invalid">
 
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fa fa-envelope"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4"></div>
-                            <div class="col-4">
-                                <button type="submit" class="btn btn-primary">Create connection</button>
-                            </div>
-                            <div class="col-4"></div>
-                        </div>
-                    </form>
-                </div>
-                <a href="home" class="text-center">Cancel</a>
+<body class="container">
+    <header class="m-5" th:replace="header :: header"></header>
+    <div class="card mt-5">
+        <div class="row mb-3">
+            <div class="col-8">
+                <p>Add buddy</p>
             </div>
-            <!-- /.form-box -->
-        </div><!-- /.card -->
-        <div class="col-4"></div>
-    </div>
-</div>
+        </div>
+        <div class="row">
 
+            <form class="form-inline form-group row" th:action="@{/connection}" th:object="${connectionDto}" method="post">
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                    <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+                </div>
+                <div class="col-4">
+                  <label class="sr-only">Contact email</label>
+                  <input type="text" class="form-control" placeholder="Contact email" th:field="*{buddy_email}" th:errorclass="is-invalid">
+                </div>
+                <div class="col-3">
+                    <button type="submit" class="btn btn-success mb-2">Add buddy</button>
+                </div>
+            </form>
+        </div>
+        <div class="row mt-3">
+            <p>My buddies</p>
+        </div>
+        <div class="row mt-3">
+            <div class="col-1"></div>
+            <table class="table col">
+                <tr>
+                    <th>First Name</th>
+                    <th>Lase Name</th>
+                    <th>Email</th>
+                    <th></th>
+                </tr>
+                <tr th:each="buddy : ${buddies}">
+                    <td th:text="${buddy.firstName}"></td>
+                    <td th:text="${buddy.lastName}"></td>
+                    <td th:text="${buddy.email}"></td>
+                    <td>
+                        <form th:action="@{/connection/delete}" method="post">
+                            <input th:name="email" th:value="${buddy.email}" hidden>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+            <div class="col-1"></div>
+        </div>
+    </div>
 </body>
-</html>

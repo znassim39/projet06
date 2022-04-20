@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.salimahafirassou.paymybuddy.domain.UserEntity;
 
-public class HomeDto implements Serializable {
+public class TransferDto implements Serializable {
 
     private List<TransactionTableDto> transactions;
     private List<UserEntity> connections;
