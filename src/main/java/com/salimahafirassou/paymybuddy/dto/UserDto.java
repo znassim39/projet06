@@ -27,14 +27,19 @@ public class UserDto implements Serializable {
     @Email(message = "email not valid")
     private String email;
 
+	@NotNull
+	@NotEmpty(message = "user name can not be empty")
+	private String userName;
+
 	public UserDto() {};
 
-	public UserDto(String firstName, String lastName, String email, String password, String confirmPassword) {
+	public UserDto(String firstName, String lastName, String email, String password, String confirmPassword, String userName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.password = password;
 		this.confirmPassword = confirmPassword;
 		this.email = email;
+		this.userName = userName;
 	}
 
 	public String getFirstName() {
@@ -75,6 +80,14 @@ public class UserDto implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
     
     

@@ -54,15 +54,6 @@ public class Transaction {
 
 	public Transaction() {};
 	
-	public Transaction(Long id, UserEntity credeted, UserEntity debited, Date paymentDate, Double amount, String description) {
-		this.id = id;
-		this.credeted = credeted;
-		this.debited = debited;
-		this.paymentDate = paymentDate;
-		this.amount = amount;
-		this.description = description;
-	}
-	
 	public Transaction(UserEntity credeted, UserEntity debited, Date paymentDate, Double amount, String description) {
 		this.credeted = credeted;
 		this.debited = debited;

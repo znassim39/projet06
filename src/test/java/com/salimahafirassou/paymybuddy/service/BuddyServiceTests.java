@@ -32,10 +32,10 @@ public class BuddyServiceTests {
 
         buddyService.addBuddy("connected_user@test.com", "test_add_buddy_ok@test.com");
 
-        assert buddyRepository.findConnection(
+        assertTrue(buddyRepository.findConnection(
             userRepository.findUserByEmail("connected_user@test.com").get().getId(),
             userRepository.findUserByEmail("test_add_buddy_ok@test.com").get().getId()
-        ).isPresent();
+        ).isPresent());
     }
 
     @Test
@@ -61,10 +61,10 @@ public class BuddyServiceTests {
 
         buddyService.deleteBuddy("connected_user@test.com", "test_delete_buddy_ok@test.com");
 
-        assert buddyRepository.findConnection(
+        assertTrue(buddyRepository.findConnection(
             userRepository.findUserByEmail("connected_user@test.com").get().getId(),
             userRepository.findUserByEmail("test_delete_buddy_ok@test.com").get().getId()
-        ).isEmpty();
+        ).isEmpty());
     }
 
     @Test
@@ -88,7 +88,13 @@ public class BuddyServiceTests {
     @Test
     public void testListBuddiesOK() throws Exception {
 
-        assert buddyService.listMyBudies("connected_user@test.com").size() > 0;
+        assertTrue(buddyService.listMyBudies("connected_user@test.com").size() > 0);
+    }
+
+    @Test
+    public void testListBuddiesOKAdmin() throws Exception {
+
+        assertTrue(buddyService.listMyBudies("test_admin@test.com").size() > 0);
     }
 
     @Test

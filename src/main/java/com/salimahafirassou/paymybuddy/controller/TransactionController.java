@@ -76,6 +76,10 @@ public class TransactionController {
         if(bindingResult.hasErrors()){
             return "redirect:/transfer";
         }
+
+        if (request.getCookies() == null) {
+            return "redirect:/login";
+        }
         
         Optional<String> user_token = Arrays.stream(request.getCookies())
                     .filter(cookie->"user_email".equals(cookie.getName()))

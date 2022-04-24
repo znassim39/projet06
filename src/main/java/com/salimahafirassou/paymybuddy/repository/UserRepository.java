@@ -1,5 +1,6 @@
 package com.salimahafirassou.paymybuddy.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,4 +27,10 @@ public interface UserRepository extends JpaRepository<UserEntity, Long>{
 	*/
 	@Query("SELECT u FROM UserEntity u WHERE id = ?1")
 	Optional<UserEntity> getUserById(Long idUser);
+
+	@Query("SELECT u FROM UserEntity u WHERE role <> 'ADMIN'")
+	List<UserEntity> getAllUsersForAdmin();
+
+	@Query("SELECT u FROM UserEntity u WHERE user_name = ?1")
+	Optional<UserEntity> findUserByUserName(String userName);
 }

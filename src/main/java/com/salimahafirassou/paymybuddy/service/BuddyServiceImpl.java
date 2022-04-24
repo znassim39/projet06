@@ -72,7 +72,13 @@ public class BuddyServiceImpl implements BuddyService{
 		if (existing_user.isEmpty()) {
 			throw new UserDoesNotExistsException("No user with email: " + email);
 		}
-		return buddyRepository.findConnectionsByUser(existing_user.get().getId());
+		UserEntity user = existing_user.get();
+
+		if (user.getRole().equals("ADMIN")) {
+			return userRepository.getAllUsersForAdmin();
+		} else {
+			return buddyRepository.findConnectionsByUser(user.getId());
+		}
 	}
 
 }

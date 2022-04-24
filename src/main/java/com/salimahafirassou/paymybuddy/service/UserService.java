@@ -6,11 +6,12 @@ import com.salimahafirassou.paymybuddy.dto.UserLoginDto;
 import com.salimahafirassou.paymybuddy.exception.PasswordDoesNotMatchException;
 import com.salimahafirassou.paymybuddy.exception.UserAlreadyExistException;
 import com.salimahafirassou.paymybuddy.exception.UserDoesNotExistsException;
+import com.salimahafirassou.paymybuddy.exception.UserNameAlreadyInUseException;
 import com.salimahafirassou.paymybuddy.exception.WrongPassworException;
 
 public interface UserService {
 
-    void register(final UserDto user) throws UserAlreadyExistException, PasswordDoesNotMatchException;
+    void register(final UserDto user) throws UserAlreadyExistException, PasswordDoesNotMatchException, UserNameAlreadyInUseException;
     boolean login(final UserLoginDto user) throws UserDoesNotExistsException;
     boolean checkIfUserExist(final String email);
     boolean checkConnected(final String email) throws UserDoesNotExistsException;

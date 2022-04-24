@@ -40,25 +40,29 @@ public class TransactionServiceImpl implements TransactionService {
 			throw new UserDoesNotExistsException("No user with email: " + credited_email);
 		}
 		UserEntity credited = existing_credited.get();
-		
-		if (debited.getBalance() >= amount){
 
-			debited.setBalance(debited.getBalance() - amount);
-			credited.setBalance(credited.getBalance() + amount);
+		if (debited.getRole().equals("USER")) {
 
-			userRepository.save(credited);
-			userRepository.save(debited);
-
-			Transaction transaction = new Transaction();
-			transaction.setDebited(debited);
-			transaction.setCredeted(credited);
-			transaction.setAmount(amount);
-			transaction.setDescription(description);
-			transaction.setPaymentDate(new Date());
-			transactionRepository.save(transaction);
-		} else {
-			throw new NotEnoughBalanceException("Your balance is not enough for this operation");
+			if (debited.getBalance() >= amount){
+				debited.setBalance(debited.getBalance() - amount);
+				userRepository.save(debited);
+			}else {
+				throw new NotEnoughBalanceException("Your balance is not enough for this operation");
+			}
 		}
+		
+		
+		credited.setBalance(credited.getBalance() + amount);
+		
+		userRepository.save(credited);
+
+		Transaction transaction = new Transaction();
+		transaction.setDebited(debited);
+		transaction.setCredeted(credited);
+		transaction.setAmount(amount);
+		transaction.setDescription(description);
+		transaction.setPaymentDate(new Date());
+		transactionRepository.save(transaction);
 	}
 
 	@Override

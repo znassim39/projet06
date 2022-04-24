@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import javax.servlet.http.Cookie;
 
-import com.salimahafirassou.paymybuddy.service.UserService;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -20,9 +18,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 public class UserControllerTests {
 
     @Autowired
-	UserService userService;
-
-    @Autowired
     MockMvc mvc;
 
     private Cookie connected_cookie = new Cookie("user_email", "connected_user@test.com");
@@ -32,9 +27,80 @@ public class UserControllerTests {
     private Cookie any_cookie = new Cookie("hello", "world");
 
     @Test
-    public void testRegister() throws Exception {
+    public void testGetRegister() throws Exception {
 
         RequestBuilder request = MockMvcRequestBuilders.get("/register");
+
+        MvcResult result = mvc.perform(request).andReturn();
+
+        assertEquals("account/register", result.getModelAndView().getViewName());
+        
+    }
+
+    @Test
+    public void testPostRegisterOK() throws Exception {
+
+        RequestBuilder request = MockMvcRequestBuilders.post("/register")
+            .param("firstName", "test")
+            .param("lastName", "test")
+            .param("email", "test_register_controller_ok@test.com")
+            .param("password", "0000")
+            .param("confirmPassword", "0000")
+            .param("userName", "test_register_controller_ok")
+            ;
+
+        MvcResult result = mvc.perform(request).andReturn();
+
+        assertEquals("redirect:/login", result.getModelAndView().getViewName());
+        
+    }
+
+    @Test
+    public void testPostRegisterKOPasswordDoesNotMatch() throws Exception {
+
+        RequestBuilder request = MockMvcRequestBuilders.post("/register")
+            .param("firstName", "test")
+            .param("lastName", "test")
+            .param("email", "test_register_controller_ko_pass_match@test.com")
+            .param("password", "0000")
+            .param("confirmPassword", "1111")
+            .param("userName", "test_register_controller_ko_pass_match")
+            ;
+
+        MvcResult result = mvc.perform(request).andReturn();
+
+        assertEquals("account/register", result.getModelAndView().getViewName());
+        
+    }
+
+    @Test
+    public void testPostRegisterKOUserAlreadyExists() throws Exception {
+
+        RequestBuilder request = MockMvcRequestBuilders.post("/register")
+            .param("firstName", "test")
+            .param("lastName", "test")
+            .param("email", "connected_user@test.com")
+            .param("password", "0000")
+            .param("confirmPassword", "0000")
+            .param("userName", "test_register_controller_ko_user_exists")
+            ;
+
+        MvcResult result = mvc.perform(request).andReturn();
+
+        assertEquals("account/register", result.getModelAndView().getViewName());
+        
+    }
+    @Test
+    public void testPostRegisterKOUserNameAlreadyInUse() throws Exception {
+
+        RequestBuilder request = MockMvcRequestBuilders.post("/register")
+            .param("firstName", "test")
+            .param("lastName", "test")
+            .param("email", "test_register_controller_ko_user_name@test.com@test.com")
+            .param("password", "0000")
+            .param("confirmPassword", "0000")
+            .param("userName", "user_1")
+            ;
 
         MvcResult result = mvc.perform(request).andReturn();
 
@@ -199,6 +265,86 @@ public class UserControllerTests {
         MvcResult result = mvc.perform(request).andReturn();
 
         assertEquals("redirect:/home", result.getModelAndView().getViewName());
+        
+    }
+
+    @Test
+    public void testPostProfileOK() throws Exception {
+
+        RequestBuilder request = MockMvcRequestBuilders.post("/profile").cookie(connected_cookie)
+        .param("firstName", "test")
+        .param("lastName", "test")
+        .param("oldPassword", "0000")
+        .param("newPassword", "0000")
+        .param("confirmPassword", "0000")
+        .param("email", "connected_user@test.com")
+        .param("balance", "0.0")
+        .param("userName", "user_1")
+        ;
+
+        MvcResult result = mvc.perform(request).andReturn();
+
+        assertEquals("redirect:/profile", result.getModelAndView().getViewName());
+        
+    }
+
+    @Test
+    public void testPostProfileKOPasswordMatch() throws Exception {
+
+        RequestBuilder request = MockMvcRequestBuilders.post("/profile").cookie(connected_cookie)
+        .param("firstName", "test")
+        .param("lastName", "test")
+        .param("oldPassword", "0000")
+        .param("newPassword", "0000")
+        .param("confirmPassword", "1111")
+        .param("email", "connected_user@test.com")
+        .param("balance", "0.0")
+        .param("userName", "user_1")
+        ;
+
+        MvcResult result = mvc.perform(request).andReturn();
+
+        assertEquals("account/profile", result.getModelAndView().getViewName());
+        
+    }
+
+    @Test
+    public void testPostProfileKOWrongPassword() throws Exception {
+
+        RequestBuilder request = MockMvcRequestBuilders.post("/profile").cookie(connected_cookie)
+        .param("firstName", "test")
+        .param("lastName", "test")
+        .param("oldPassword", "1111")
+        .param("newPassword", "0000")
+        .param("confirmPassword", "0000")
+        .param("email", "connected_user@test.com")
+        .param("balance", "0.0")
+        .param("userName", "user_1")
+        ;
+
+        MvcResult result = mvc.perform(request).andReturn();
+
+        assertEquals("account/profile", result.getModelAndView().getViewName());
+        
+    }
+
+    @Test
+    public void testPostProfileKOUserDoesNotExist() throws Exception {
+
+        RequestBuilder request = MockMvcRequestBuilders.post("/profile").cookie(connected_cookie)
+        .param("firstName", "test")
+        .param("lastName", "test")
+        .param("oldPassword", "0000")
+        .param("newPassword", "0000")
+        .param("confirmPassword", "0000")
+        .param("email", "user_does_not_exist@test.com")
+        .param("balance", "0.0")
+        .param("userName", "does_not_exist")
+        ;
+
+        MvcResult result = mvc.perform(request).andReturn();
+
+        assertEquals("account/profile", result.getModelAndView().getViewName());
         
     }
     

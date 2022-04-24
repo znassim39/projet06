@@ -43,10 +43,29 @@ public class TransactionServiceTests {
             userRepository.findUserByEmail("test_transaction_ok_debeted@test.com").get().getId()
             );
         
-        assert transactions.stream().filter( transaction -> 
+        assertTrue(transactions.stream().filter( transaction -> 
             transaction.getCredeted().getEmail().equals("test_transaction_ok_credeted@test.com")
             && transaction.getDescription().equals("test_transfer_ok")
-            ).findAny().isPresent();
+            ).findAny().isPresent());
+    }
+
+    @Test
+    public void testTransferToBuddyOKAdmin() throws Exception {
+
+        transactionService.transactionToBuddy(
+            "test_admin@test.com", 
+            "test_transaction_ok_credeted@test.com", 
+            10.0, 
+            "test_transfer_ok");
+
+        List<Transaction> transactions = transactionRepository.findTransactionByUser(
+            userRepository.findUserByEmail("test_admin@test.com").get().getId()
+            );
+        
+        assertTrue(transactions.stream().filter( transaction -> 
+            transaction.getCredeted().getEmail().equals("test_transaction_ok_credeted@test.com")
+            && transaction.getDescription().equals("test_transfer_ok")
+            ).findAny().isPresent());
     }
     
     @Test
@@ -87,7 +106,7 @@ public class TransactionServiceTests {
 
         List<TransactionTableDto> transactions = transactionService.getTransactionsByUser("test_transaction_ok_debeted@test.com");
 
-        assert transactions.size() > 0;
+        assertTrue(transactions.size() > 0);
     }
 
     @Test

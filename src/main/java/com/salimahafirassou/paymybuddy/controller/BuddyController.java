@@ -2,7 +2,6 @@ package com.salimahafirassou.paymybuddy.controller;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.Cookie;
@@ -24,7 +23,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -67,6 +65,10 @@ public class BuddyController {
     @PostMapping("/connection/delete")
     public String deleteConnection(HttpServletRequest request, @RequestParam("email") String email){
 
+        if (request.getCookies() == null) {
+            return "redirect:/login";
+        }
+
         Optional<String> user_token = Arrays.stream(request.getCookies())
                     .filter(cookie->"user_email".equals(cookie.getName()))
                     .map(Cookie::getValue)
@@ -97,6 +99,11 @@ public class BuddyController {
         if(bindingResult.hasErrors()){
             return "redirect:/connection";
         }
+
+        if (request.getCookies() == null) {
+            return "redirect:/login";
+        }
+        
         Optional<String> user_token = Arrays.stream(request.getCookies())
                     .filter(cookie->"user_email".equals(cookie.getName()))
                     .map(Cookie::getValue)

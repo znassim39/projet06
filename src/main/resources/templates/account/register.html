@@ -20,6 +20,15 @@
                             <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
                         </div>
                         <div class="input-group mb-3">
+                            <input type="text" class="form-control" th:field="*{userName}" placeholder="User Name"
+                                   th:errorclass="is-invalid">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fa fa-user"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
                             <input type="text" class="form-control" th:field="*{firstName}" placeholder="First Name"
                                    th:errorclass="is-invalid">
                             <div class="input-group-append">
