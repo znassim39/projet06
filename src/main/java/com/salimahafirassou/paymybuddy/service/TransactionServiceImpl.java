@@ -11,7 +11,7 @@ import java.util.Optional;
 import com.salimahafirassou.paymybuddy.domain.Transaction;
 import com.salimahafirassou.paymybuddy.domain.UserEntity;
 import com.salimahafirassou.paymybuddy.dto.TransactionTableDto;
-import com.salimahafirassou.paymybuddy.exception.NotEnoughBalance;
+import com.salimahafirassou.paymybuddy.exception.NotEnoughBalanceException;
 import com.salimahafirassou.paymybuddy.exception.UserDoesNotExistsException;
 import com.salimahafirassou.paymybuddy.repository.TransactionRepository;
 import com.salimahafirassou.paymybuddy.repository.UserRepository;
@@ -27,7 +27,7 @@ public class TransactionServiceImpl implements TransactionService {
 
 	@Override
 	public void transactionToBuddy(String debited_email, String credited_email, Double amount, String description) 
-		throws UserDoesNotExistsException, NotEnoughBalance {
+		throws UserDoesNotExistsException, NotEnoughBalanceException {
 		
 		Optional<UserEntity> existing_debited = userRepository.findUserByEmail(debited_email);
 		if (existing_debited.isEmpty()) {
@@ -57,7 +57,7 @@ public class TransactionServiceImpl implements TransactionService {
 			transaction.setPaymentDate(new Date());
 			transactionRepository.save(transaction);
 		} else {
-			throw new NotEnoughBalance("Your balance is not enough for this operation");
+			throw new NotEnoughBalanceException("Your balance is not enough for this operation");
 		}
 	}
 

@@ -1,7 +1,7 @@
 package com.salimahafirassou.paymybuddy.service;
 
-import com.salimahafirassou.paymybuddy.exception.ConnectionAlreadyExists;
-import com.salimahafirassou.paymybuddy.exception.ConnectionDoesNotExist;
+import com.salimahafirassou.paymybuddy.exception.ConnectionAlreadyExistsException;
+import com.salimahafirassou.paymybuddy.exception.ConnectionDoesNotExistException;
 import com.salimahafirassou.paymybuddy.exception.UserDoesNotExistsException;
 import com.salimahafirassou.paymybuddy.repository.BuddyRepository;
 import com.salimahafirassou.paymybuddy.repository.UserRepository;
@@ -53,7 +53,7 @@ public class BuddyServiceTests {
     @Test
     public void testAddBuddyKOConnectionExist() throws Exception {
 
-        assertThrows(ConnectionAlreadyExists.class, () -> buddyService.addBuddy("connected_user@test.com", "test_list_buddies_ok@test.com"));
+        assertThrows(ConnectionAlreadyExistsException.class, () -> buddyService.addBuddy("connected_user@test.com", "test_list_buddies_ok@test.com"));
     }
 
     @Test
@@ -82,7 +82,7 @@ public class BuddyServiceTests {
     @Test
     public void testDeleteBuddyKOConnectionDoesNotExist() throws Exception {
 
-        assertThrows(ConnectionDoesNotExist.class, () -> buddyService.deleteBuddy("connected_user@test.com", "disconnected_user@test.com"));
+        assertThrows(ConnectionDoesNotExistException.class, () -> buddyService.deleteBuddy("connected_user@test.com", "disconnected_user@test.com"));
     }
 
     @Test

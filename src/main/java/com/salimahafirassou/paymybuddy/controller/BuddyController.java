@@ -12,8 +12,8 @@ import javax.validation.Valid;
 import com.salimahafirassou.paymybuddy.domain.UserEntity;
 import com.salimahafirassou.paymybuddy.dto.ConnectionDto;
 import com.salimahafirassou.paymybuddy.dto.DeleteConnectionDto;
-import com.salimahafirassou.paymybuddy.exception.ConnectionAlreadyExists;
-import com.salimahafirassou.paymybuddy.exception.ConnectionDoesNotExist;
+import com.salimahafirassou.paymybuddy.exception.ConnectionAlreadyExistsException;
+import com.salimahafirassou.paymybuddy.exception.ConnectionDoesNotExistException;
 import com.salimahafirassou.paymybuddy.exception.UserDoesNotExistsException;
 import com.salimahafirassou.paymybuddy.service.BuddyService;
 import com.salimahafirassou.paymybuddy.service.UserService;
@@ -85,7 +85,7 @@ public class BuddyController {
 				email);
         } catch (UserDoesNotExistsException e){
             return "redirect:/connection";
-        } catch (ConnectionDoesNotExist e) {
+        } catch (ConnectionDoesNotExistException e) {
             return "redirect:/connection";
         }
         return "redirect:/connection";
@@ -129,7 +129,7 @@ public class BuddyController {
             model.addAttribute("buddies", buddies);
             return "app/connection";
         }
-        catch (ConnectionAlreadyExists e){
+        catch (ConnectionAlreadyExistsException e){
             bindingResult.rejectValue("buddy_email", "connectionDto.buddy_email", e.getMessage());
             model.addAttribute("connectionDto", connectionDto);
             model.addAttribute("buddies", buddies);

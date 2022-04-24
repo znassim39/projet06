@@ -20,7 +20,7 @@ import com.salimahafirassou.paymybuddy.domain.UserEntity;
 import com.salimahafirassou.paymybuddy.dto.CreateTransactionDto;
 import com.salimahafirassou.paymybuddy.dto.TransferDto;
 import com.salimahafirassou.paymybuddy.dto.TransactionTableDto;
-import com.salimahafirassou.paymybuddy.exception.NotEnoughBalance;
+import com.salimahafirassou.paymybuddy.exception.NotEnoughBalanceException;
 import com.salimahafirassou.paymybuddy.exception.UserDoesNotExistsException;
 import com.salimahafirassou.paymybuddy.service.BuddyService;
 import com.salimahafirassou.paymybuddy.service.TransactionService;
@@ -100,7 +100,7 @@ public class TransactionController {
 				createTransactionDto.getCredited_email(), 
 				createTransactionDto.getAmount(),
 				createTransactionDto.getDescription());
-        } catch (NotEnoughBalance e){
+        } catch (NotEnoughBalanceException e){
             bindingResult.rejectValue("amount", "createTransactionDto.amount", e.getMessage());
             model.addAttribute("transferDto", transferDto);
             model.addAttribute("createTransactionDto", createTransactionDto);

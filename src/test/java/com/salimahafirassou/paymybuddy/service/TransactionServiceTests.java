@@ -10,7 +10,7 @@ import java.util.List;
 
 import com.salimahafirassou.paymybuddy.domain.Transaction;
 import com.salimahafirassou.paymybuddy.dto.TransactionTableDto;
-import com.salimahafirassou.paymybuddy.exception.NotEnoughBalance;
+import com.salimahafirassou.paymybuddy.exception.NotEnoughBalanceException;
 import com.salimahafirassou.paymybuddy.exception.UserDoesNotExistsException;
 import com.salimahafirassou.paymybuddy.repository.TransactionRepository;
 import com.salimahafirassou.paymybuddy.repository.UserRepository;
@@ -52,7 +52,7 @@ public class TransactionServiceTests {
     @Test
     public void testTransferToBuddyKONotEnoughBalance() throws Exception {
 
-        assertThrows(NotEnoughBalance.class, () -> transactionService.transactionToBuddy(
+        assertThrows(NotEnoughBalanceException.class, () -> transactionService.transactionToBuddy(
             "test_transaction_ko@test.com", 
             "test_transaction_ok_credeted@test.com", 
             20.0, 
