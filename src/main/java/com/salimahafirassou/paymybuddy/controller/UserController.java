@@ -64,7 +64,8 @@ public class UserController {
 
     @PostMapping("/login")
     public String userLogin(final UserLoginDto userLoginDto, final BindingResult bindingResult, final Model model,
-                    HttpServletResponse response){
+                    HttpServletResponse response) throws Exception{
+
         if(bindingResult.hasErrors()){
             model.addAttribute("loginForm", userLoginDto);
             return "account/login";

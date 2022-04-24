@@ -6,17 +6,7 @@ package com.salimahafirassou.paymybuddy.exception;
  */
 public class PasswordDoesNotMatchException extends Exception {
 
-    public PasswordDoesNotMatchException() {
-        super();
-    }
-
-
     public PasswordDoesNotMatchException(String message) {
         super(message);
-    }
-
-
-    public PasswordDoesNotMatchException(String message, Throwable cause) {
-        super(message, cause);
     }
 }

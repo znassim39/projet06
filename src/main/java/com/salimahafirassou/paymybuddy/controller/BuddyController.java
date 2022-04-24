@@ -13,6 +13,7 @@ import com.salimahafirassou.paymybuddy.domain.UserEntity;
 import com.salimahafirassou.paymybuddy.dto.ConnectionDto;
 import com.salimahafirassou.paymybuddy.dto.DeleteConnectionDto;
 import com.salimahafirassou.paymybuddy.exception.ConnectionAlreadyExists;
+import com.salimahafirassou.paymybuddy.exception.ConnectionDoesNotExist;
 import com.salimahafirassou.paymybuddy.exception.UserDoesNotExistsException;
 import com.salimahafirassou.paymybuddy.service.BuddyService;
 import com.salimahafirassou.paymybuddy.service.UserService;
@@ -36,7 +37,8 @@ public class BuddyController {
 	UserService userService;
 
     @GetMapping("/connection")
-    public String register(HttpServletRequest request, final Model model){
+    public String contacts(HttpServletRequest request, final Model model){
+        
         if (request.getCookies() == null) {
             return "redirect:/login";
         }
@@ -65,7 +67,6 @@ public class BuddyController {
     @PostMapping("/connection/delete")
     public String deleteConnection(HttpServletRequest request, @RequestParam("email") String email){
 
-        System.out.println(email);
         Optional<String> user_token = Arrays.stream(request.getCookies())
                     .filter(cookie->"user_email".equals(cookie.getName()))
                     .map(Cookie::getValue)
@@ -83,6 +84,8 @@ public class BuddyController {
 				user_token.get(), 
 				email);
         } catch (UserDoesNotExistsException e){
+            return "redirect:/connection";
+        } catch (ConnectionDoesNotExist e) {
             return "redirect:/connection";
         }
         return "redirect:/connection";

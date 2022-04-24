@@ -47,40 +47,33 @@ public class Transaction {
 	private Date paymentDate;
 
 	@Column(name="amount")
-	private Float amount;
-
-	@Column(name="typeTransaction")
-	private String typeTransaction;
+	private Double amount;
 
 	@Column(name="description")
 	private String description;
 
 	public Transaction() {};
 	
-	public Transaction(Long id, UserEntity credeted, UserEntity debited, Date paymentDate, Float amount,
-			String typeTransaction, String description) {
+	public Transaction(Long id, UserEntity credeted, UserEntity debited, Date paymentDate, Double amount, String description) {
 		this.id = id;
 		this.credeted = credeted;
 		this.debited = debited;
 		this.paymentDate = paymentDate;
 		this.amount = amount;
-		this.typeTransaction = typeTransaction;
 		this.description = description;
 	}
 	
-	public Transaction(UserEntity credeted, UserEntity debited, Date paymentDate, Float amount,
-				String typeTransaction, String description) {
+	public Transaction(UserEntity credeted, UserEntity debited, Date paymentDate, Double amount, String description) {
 		this.credeted = credeted;
 		this.debited = debited;
 		this.paymentDate = paymentDate;
 		this.amount = amount;
-		this.typeTransaction = typeTransaction;
 		this.description = description;
 	}
-	public Float getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
-	public void setAmount(Float amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
 	
@@ -95,9 +88,6 @@ public class Transaction {
 	
 	public Date getPaymentDate() { return paymentDate; }
 	public void setPaymentDate(Date paymentDate) { this.paymentDate = paymentDate; }
-	
-	public String getTypeTransaction() { return typeTransaction; }
-	public void setTypeTransaction(String typeTransaction) { this.typeTransaction = typeTransaction; }
 
 	public String getDescription() { return description; }
 	public void setDescription(String description) { this.description = description; }

@@ -24,6 +24,22 @@ public class ProfileDto implements Serializable {
 
 	private Double balance;
 
+	
+
+	public ProfileDto() {
+	}
+
+	public ProfileDto(String firstName, String lastName, String email, Double balance, String oldPassword,
+			String newPassword, String confirmPassword) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.oldPassword = oldPassword;
+		this.newPassword = newPassword;
+		this.confirmPassword = confirmPassword;
+		this.email = email;
+		this.balance = balance;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}

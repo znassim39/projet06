@@ -38,9 +38,6 @@ public class UserEntity {
 	@Column(name="password")
 	private String password;
 	
-	@Column(name="bankAccount")
-	private String banckAccount;
-	
 	@Column(name="balance")
 	private Double balance = 0.0;
 
@@ -50,20 +47,22 @@ public class UserEntity {
 	public UserEntity() {
 	}
 	
-	public UserEntity(Long id, String firstName, String lastName, String email, String password, Boolean connected) {
+	public UserEntity(Long id, String firstName, String lastName, String email, String password, Double balance, Boolean connected) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
+		this.balance = balance;
 		this.connected = connected;
 	}
 	
-	public UserEntity(String firstName, String lastName, String email, String password, Boolean connected) {
+	public UserEntity(String firstName, String lastName, String email, String password, Double balance, Boolean connected) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
+		this.balance = balance;
 		this.connected = connected;
 	}
 	public Long getId() {
@@ -95,12 +94,6 @@ public class UserEntity {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	public String getBanckAccount() {
-		return banckAccount;
-	}
-	public void setBanckAccount(String banckAccount) {
-		this.banckAccount = banckAccount;
 	}
 	public Double getBalance() {
 		return balance;

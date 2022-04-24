@@ -3,8 +3,6 @@ package com.salimahafirassou.paymybuddy.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import Utils.TypeTransaction;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +11,7 @@ import java.util.Optional;
 import com.salimahafirassou.paymybuddy.domain.Transaction;
 import com.salimahafirassou.paymybuddy.domain.UserEntity;
 import com.salimahafirassou.paymybuddy.dto.TransactionTableDto;
+import com.salimahafirassou.paymybuddy.exception.NotEnoughBalance;
 import com.salimahafirassou.paymybuddy.exception.UserDoesNotExistsException;
 import com.salimahafirassou.paymybuddy.repository.TransactionRepository;
 import com.salimahafirassou.paymybuddy.repository.UserRepository;
@@ -25,57 +24,10 @@ public class TransactionServiceImpl implements TransactionService {
 
 	@Autowired
 	UserRepository userRepository;
-	
-	@Override
-	public void transferToUserAccount(String user_email, Float amount) throws UserDoesNotExistsException {
-		Optional<UserEntity> existing_user = userRepository.findUserByEmail(user_email);
-
-		if (existing_user.isEmpty()) {
-			throw new UserDoesNotExistsException("No user with email: " + user_email);
-		}
-
-		UserEntity user = existing_user.get();
-
-		user.setBalance(user.getBalance() + amount);
-		userRepository.save(user);
-
-		Transaction transaction = new Transaction();
-		transaction.setDebited(user);
-		transaction.setCredeted(user);
-		transaction.setAmount(amount);
-		transaction.setTypeTransaction(TypeTransaction.TRANSFERTOUSERACCOUNT);
-		transaction.setPaymentDate(new Date());
-		transactionRepository.save(transaction);
-	}
 
 	@Override
-	public void transferToBankAccount(String user_email, Float amount) throws UserDoesNotExistsException {
-		Optional<UserEntity> existing_user = userRepository.findUserByEmail(user_email);
-
-		if (existing_user.isEmpty()) {
-			throw new UserDoesNotExistsException("No user with email: " + user_email);
-		}
-
-		UserEntity user = existing_user.get();
-
-		if (user.getBalance() >= amount){
-			
-			user.setBalance(user.getBalance() - amount);
-			userRepository.save(user);
-
-			Transaction transaction = new Transaction();
-			transaction.setDebited(user);
-			transaction.setCredeted(user);
-			transaction.setAmount(amount);
-			transaction.setTypeTransaction(TypeTransaction.TRANSFERTOBANKACCOUNT);
-			transaction.setPaymentDate(new Date());
-			transactionRepository.save(transaction);
-		}
-	}
-
-	@Override
-	public void transactionToBuddy(String debited_email, String credited_email, Float amount, String description) 
-		throws UserDoesNotExistsException {
+	public void transactionToBuddy(String debited_email, String credited_email, Double amount, String description) 
+		throws UserDoesNotExistsException, NotEnoughBalance {
 		
 		Optional<UserEntity> existing_debited = userRepository.findUserByEmail(debited_email);
 		if (existing_debited.isEmpty()) {
@@ -102,9 +54,10 @@ public class TransactionServiceImpl implements TransactionService {
 			transaction.setCredeted(credited);
 			transaction.setAmount(amount);
 			transaction.setDescription(description);
-			transaction.setTypeTransaction(TypeTransaction.TRANSFERTOBUDDY);
 			transaction.setPaymentDate(new Date());
 			transactionRepository.save(transaction);
+		} else {
+			throw new NotEnoughBalance("Your balance is not enough for this operation");
 		}
 	}
 

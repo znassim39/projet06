@@ -20,6 +20,7 @@ import com.salimahafirassou.paymybuddy.domain.UserEntity;
 import com.salimahafirassou.paymybuddy.dto.CreateTransactionDto;
 import com.salimahafirassou.paymybuddy.dto.TransferDto;
 import com.salimahafirassou.paymybuddy.dto.TransactionTableDto;
+import com.salimahafirassou.paymybuddy.exception.NotEnoughBalance;
 import com.salimahafirassou.paymybuddy.exception.UserDoesNotExistsException;
 import com.salimahafirassou.paymybuddy.service.BuddyService;
 import com.salimahafirassou.paymybuddy.service.TransactionService;
@@ -83,15 +84,28 @@ public class TransactionController {
         if (user_token.isEmpty()){
             return "redirect:/login";
         }
+
+        TransferDto transferDto = new TransferDto();
+
         try {
+
+            List<UserEntity> buddies = buddyService.listMyBudies(user_token.get());
+            List<TransactionTableDto> transactions = transactionService.getTransactionsByUser(user_token.get());
+
+            transferDto.setConnections(buddies);
+            transferDto.setTransactions(transactions);
+
             transactionService.transactionToBuddy(
 				user_token.get(), 
 				createTransactionDto.getCredited_email(), 
 				createTransactionDto.getAmount(),
 				createTransactionDto.getDescription());
-        } catch (Exception e){
-            System.out.println(e);
+        } catch (NotEnoughBalance e){
+            bindingResult.rejectValue("amount", "createTransactionDto.amount", e.getMessage());
+            model.addAttribute("transferDto", transferDto);
             model.addAttribute("createTransactionDto", createTransactionDto);
+            return "app/transfer";
+        } catch (Exception e){
             return "redirect:/transfer";
         }
         return "redirect:/transfer";

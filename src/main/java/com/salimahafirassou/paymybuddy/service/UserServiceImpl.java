@@ -97,8 +97,6 @@ public class UserServiceImpl implements UserService {
             throw new UserDoesNotExistsException("User does not exist");
         }
         UserEntity userEntity = existing_user.get();
-
-        System.out.println(profileDto.getOldPassword());
         
         if (profileDto.getOldPassword() != null && profileDto.getOldPassword() != "") {
             

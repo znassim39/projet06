@@ -13,7 +13,7 @@ public class CreateTransactionDto implements Serializable {
 
     @NotNull
     @NotEmpty(message = "the amount is requireds")
-    private Float amount;
+    private Double amount;
     
     private String description;
 
@@ -23,10 +23,10 @@ public class CreateTransactionDto implements Serializable {
     public void setCredited_email(String credited_email) {
         this.credited_email = credited_email;
     }
-    public Float getAmount() {
+    public Double getAmount() {
         return amount;
     }
-    public void setAmount(Float amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 

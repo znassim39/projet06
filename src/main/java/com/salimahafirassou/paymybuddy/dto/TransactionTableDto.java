@@ -4,7 +4,7 @@ public class TransactionTableDto {
 
     private String buddy_name;
     private String description;
-    private Float amount;
+    private Double amount;
     
     public String getBuddy_name() {
         return buddy_name;
@@ -18,10 +18,10 @@ public class TransactionTableDto {
     public void setDescription(String description) {
         this.description = description;
     }
-    public Float getAmount() {
+    public Double getAmount() {
         return amount;
     }
-    public void setAmount(Float amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 }

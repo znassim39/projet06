@@ -27,6 +27,16 @@ public class UserDto implements Serializable {
     @Email(message = "email not valid")
     private String email;
 
+	public UserDto() {};
+
+	public UserDto(String firstName, String lastName, String email, String password, String confirmPassword) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.password = password;
+		this.confirmPassword = confirmPassword;
+		this.email = email;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
