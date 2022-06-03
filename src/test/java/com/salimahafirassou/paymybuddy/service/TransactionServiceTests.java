@@ -52,7 +52,7 @@ public class TransactionServiceTests {
     @Test
     public void testTransferToBuddyOKAdmin() throws Exception {
 
-        transactionService.transactionToBuddy(
+        transactionService.transactionToUser(
             "test_admin@test.com", 
             "test_transaction_ok_credeted@test.com", 
             10.0, 

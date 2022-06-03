@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.salimahafirassou.paymybuddy.domain.Buddy;
 import com.salimahafirassou.paymybuddy.domain.UserEntity;
@@ -15,6 +16,7 @@ import com.salimahafirassou.paymybuddy.repository.BuddyRepository;
 import com.salimahafirassou.paymybuddy.repository.UserRepository;
 
 @Service
+@Transactional
 public class BuddyServiceImpl implements BuddyService{
 
 	@Autowired

@@ -8,7 +8,6 @@ import com.salimahafirassou.paymybuddy.dto.UserLoginDto;
 import com.salimahafirassou.paymybuddy.exception.PasswordDoesNotMatchException;
 import com.salimahafirassou.paymybuddy.exception.UserAlreadyExistException;
 import com.salimahafirassou.paymybuddy.exception.UserDoesNotExistsException;
-import com.salimahafirassou.paymybuddy.exception.UserNameAlreadyInUseException;
 import com.salimahafirassou.paymybuddy.exception.WrongPassworException;
 import com.salimahafirassou.paymybuddy.repository.TransactionRepository;
 import com.salimahafirassou.paymybuddy.repository.UserRepository;
@@ -34,7 +33,7 @@ public class UserServiceTests {
     @Test
     public void testCreateUserOK() throws Exception {
 
-        UserDto userDto =new UserDto("test", "test", "create_user_ok@test.com", "0000", "0000", "userName1");
+        UserDto userDto =new UserDto("test", "test", "create_user_ok@test.com", "0000", "0000");
 
         userService.register(userDto);
 
@@ -44,30 +43,10 @@ public class UserServiceTests {
 
     }
 
-    @Test
-    public void testCreateUserOKAdmin() throws Exception {
-
-        UserEntity admin = userRepository.findUserByEmail("test_admin@test.com").get();
-
-        transactionRepository.deleteAll(transactionRepository.findTransactionByUser(admin.getId()));
-
-        userRepository.delete(admin);
-
-        UserDto userDto =new UserDto("test", "test", "test_admin@test.com", "0000", "0000", "admin");
-
-        userService.register(userDto);
-
-        Optional<UserEntity> existing_user = userRepository.findUserByEmail("test_admin@test.com");
-
-        assertTrue(existing_user.isPresent());
-        assertEquals("ADMIN", existing_user.get().getRole());
-
-    }
-
 	@Test
     public void testCreateUserKOUserExists() throws Exception {
 
-        UserDto userDto =new UserDto("test", "test", "create_user_ko@test.com", "0000", "0000", "user_3");
+        UserDto userDto =new UserDto("test", "test", "create_user_ko@test.com", "0000", "0000");
 
 		assertThrows(UserAlreadyExistException.class, () -> userService.register(userDto));
 
@@ -76,18 +55,9 @@ public class UserServiceTests {
     @Test
     public void testCreateUserKOPasswordMatch() throws Exception {
 
-        UserDto userDto =new UserDto("test", "test", "create_user_ko_password_match@test.com", "0000", "1111", "userName2");
+        UserDto userDto =new UserDto("test", "test", "create_user_ko_password_match@test.com", "0000", "1111");
 
 		assertThrows(PasswordDoesNotMatchException.class, () -> userService.register(userDto));
-
-    }
-
-    @Test
-    public void testCreateUserKOUserNameAlreadyInUse() throws Exception {
-
-        UserDto userDto =new UserDto("test", "test", "create_user_ko_user_name@test.com", "0000", "0000", "user_1");
-
-		assertThrows(UserNameAlreadyInUseException.class, () -> userService.register(userDto));
 
     }
 
@@ -162,7 +132,7 @@ public class UserServiceTests {
     @Test
     public void testUpdateUserOKWithPasswordNull() throws Exception {
 
-        ProfileDto profileDto = new ProfileDto("test1", "test1", "update_user_ok_pass_null@test.com", 0.0, "user_6", null, null, null);
+        ProfileDto profileDto = new ProfileDto("test1", "test1", "update_user_ok_pass_null@test.com", 0.0, null, null, null);
 
         userService.update(profileDto);
 
@@ -177,7 +147,7 @@ public class UserServiceTests {
     @Test
     public void testUpdateUserOKWithPasswordEmpty() throws Exception {
 
-        ProfileDto profileDto = new ProfileDto("test1", "test1", "update_user_ok_pass_empty@test.com", 0.0, "user_7", "", null, null);
+        ProfileDto profileDto = new ProfileDto("test1", "test1", "update_user_ok_pass_empty@test.com", 0.0, "", null, null);
 
         userService.update(profileDto);
 
@@ -192,7 +162,7 @@ public class UserServiceTests {
     @Test
     public void testUpdateUserOKWithPassword() throws Exception {
 
-        ProfileDto profileDto = new ProfileDto("test1", "test1", "update_user_ok@test.com", 0.0, "user_8", "0000", "1111", "1111");
+        ProfileDto profileDto = new ProfileDto("test1", "test1", "update_user_ok@test.com", 0.0, "0000", "1111", "1111");
 
         userService.update(profileDto);
 
@@ -207,7 +177,7 @@ public class UserServiceTests {
     @Test
     public void testUpdateUserOKWongPassword() throws Exception {
 
-        ProfileDto profileDto = new ProfileDto("test1", "test1", "update_user_ko_wrong_password@test.com", 0.0, "user_9", "1234", "1111", "1111");
+        ProfileDto profileDto = new ProfileDto("test1", "test1", "update_user_ko_wrong_password@test.com", 0.0, "1234", "1111", "1111");
 
         assertThrows(WrongPassworException.class, () -> userService.update(profileDto));
     }
@@ -215,7 +185,7 @@ public class UserServiceTests {
     @Test
     public void testUpdateUserOKPasswordMatch() throws Exception {
 
-        ProfileDto profileDto = new ProfileDto("test1", "test1", "update_user_ko_password_match@test.com", 0.0, "user_10", "0000", "1111", "1234");
+        ProfileDto profileDto = new ProfileDto("test1", "test1", "update_user_ko_password_match@test.com", 0.0, "0000", "1111", "1234");
         assertThrows(PasswordDoesNotMatchException.class, () -> userService.update(profileDto));
         
     }
@@ -223,7 +193,7 @@ public class UserServiceTests {
     @Test
     public void testUpdateUserOKUserDoesNotExists() throws Exception {
 
-        ProfileDto profileDto = new ProfileDto("test1", "test1", "user_does_not_exist@test.com", 0.0, "does_not_exists", null, null, null);
+        ProfileDto profileDto = new ProfileDto("test1", "test1", "user_does_not_exist@test.com", 0.0, null, null, null);
         assertThrows(UserDoesNotExistsException.class, () -> userService.update(profileDto));
         
     }

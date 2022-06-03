@@ -99,11 +99,19 @@ public class TransactionController {
             transferDto.setConnections(buddies);
             transferDto.setTransactions(transactions);
 
-            transactionService.transactionToBuddy(
+            if (userService.checkAdmin(user_token.get())) {
+                transactionService.transactionToUser(
 				user_token.get(), 
 				createTransactionDto.getCredited_email(), 
 				createTransactionDto.getAmount(),
 				createTransactionDto.getDescription());
+            } else {
+                transactionService.transactionToBuddy(
+                    user_token.get(), 
+                    createTransactionDto.getCredited_email(), 
+                    createTransactionDto.getAmount(),
+                    createTransactionDto.getDescription());
+            }
         } catch (NotEnoughBalanceException e){
             bindingResult.rejectValue("amount", "createTransactionDto.amount", e.getMessage());
             model.addAttribute("transferDto", transferDto);

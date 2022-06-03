@@ -23,14 +23,10 @@ public class ProfileDto implements Serializable {
 
 	private Double balance;
 
-	private String userName;
-
-	
-
 	public ProfileDto() {
 	}
 
-	public ProfileDto(String firstName, String lastName, String email, Double balance, String userName, String oldPassword,
+	public ProfileDto(String firstName, String lastName, String email, Double balance, String oldPassword,
 			String newPassword, String confirmPassword) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -39,7 +35,6 @@ public class ProfileDto implements Serializable {
 		this.confirmPassword = confirmPassword;
 		this.email = email;
 		this.balance = balance;
-		this.userName = userName;
 	}
 
 	public String getFirstName() {
@@ -96,14 +91,6 @@ public class ProfileDto implements Serializable {
 
 	public void setBalance(Double balance) {
 		this.balance = balance;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
 	}
     
 }

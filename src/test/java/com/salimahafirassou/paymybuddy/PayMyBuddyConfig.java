@@ -27,38 +27,38 @@ public class PayMyBuddyConfig {
 
 			try {
 
-				UserEntity user_1 = new UserEntity("test", "test", "connected_user@test.com", "0000", 0.0, true, "user_1");
-				UserEntity user_2 = new UserEntity("test", "test", "disconnected_user@test.com", "0000", 0.0, false, "user_2");
-				UserEntity user_3 = new UserEntity("test", "test", "create_user_ko@test.com", "0000", 0.0, false, "user_3");
-				UserEntity user_4 = new UserEntity("test", "test", "login_user_ok@test.com", "0000", 0.0, false, "user_4");
-				UserEntity user_5 = new UserEntity("test", "test", "logout_user_ok@test.com", "0000", 0.0, true, "user_5");
+				UserEntity user_1 = new UserEntity("test", "test", "connected_user@test.com", "0000", 0.0, true);
+				UserEntity user_2 = new UserEntity("test", "test", "disconnected_user@test.com", "0000", 0.0, false);
+				UserEntity user_3 = new UserEntity("test", "test", "create_user_ko@test.com", "0000", 0.0, false);
+				UserEntity user_4 = new UserEntity("test", "test", "login_user_ok@test.com", "0000", 0.0, false);
+				UserEntity user_5 = new UserEntity("test", "test", "logout_user_ok@test.com", "0000", 0.0, true);
 				UserEntity user_6 = new UserEntity("test", "test", "update_user_ok_pass_null@test.com", "0000", 0.0,
-						true, "user_6");
+						true);
 				UserEntity user_7 = new UserEntity("test", "test", "update_user_ok_pass_empty@test.com", "0000", 0.0,
-						true, "user_7");
-				UserEntity user_8 = new UserEntity("test", "test", "update_user_ok@test.com", "0000", 0.0, true, "user_8");
+						true);
+				UserEntity user_8 = new UserEntity("test", "test", "update_user_ok@test.com", "0000", 0.0, true);
 				UserEntity user_9 = new UserEntity("test", "test", "update_user_ko_wrong_password@test.com", "0000",
-						0.0, true, "user_9");
+						0.0, true);
 				UserEntity user_10 = new UserEntity("test", "test", "update_user_ko_password_match@test.com", "0000",
-						0.0, true, "user_10");
+						0.0, true);
 
 				UserEntity user_11 = new UserEntity("test", "test", "test_transaction_ok_credeted@test.com", "0000",
-						100.0, true, "user_11");
+						100.0, true);
 				UserEntity user_12 = new UserEntity("test", "test", "test_transaction_ok_debeted@test.com", "0000",
-						100.0, true, "user_12");
-				UserEntity user_13 = new UserEntity("test", "test", "test_transaction_ko@test.com", "0000", 10.0, true, "user_13");
+						100.0, true);
+				UserEntity user_13 = new UserEntity("test", "test", "test_transaction_ko@test.com", "0000", 10.0, true);
 
 				UserEntity user_14 = new UserEntity("test", "test", "test_list_buddies_ok@test.com", "0000", 100.0,
-						true, "user_14");
-				UserEntity user_15 = new UserEntity("test", "test", "test_add_buddy_ok@test.com", "0000", 10.0, true, "user_15");
+						true);
+				UserEntity user_15 = new UserEntity("test", "test", "test_add_buddy_ok@test.com", "0000", 10.0, true);
 				UserEntity user_16 = new UserEntity("test", "test", "test_delete_buddy_ok@test.com", "0000", 100.0,
-						true, "user_16");
+						true);
 				UserEntity user_20 = new UserEntity("test", "test", "test_delete_buddy_controller_ok@test.com", "0000", 100.0,
-						true, "user_20");
-				UserEntity user_17 = new UserEntity("test", "test", "connected_logout_user@test.com", "0000", 0.0, true, "user_17");
-				UserEntity user_18 = new UserEntity("test", "test", "test_login_controller_user@test.com", "0000", 0.0, false, "user_18");
+						true);
+				UserEntity user_17 = new UserEntity("test", "test", "connected_logout_user@test.com", "0000", 0.0, true);
+				UserEntity user_18 = new UserEntity("test", "test", "test_login_controller_user@test.com", "0000", 0.0, false);
 
-				UserEntity user_19 = new UserEntity("test", "test", "test_admin@test.com", "0000", 0.0, false, "admin");
+				UserEntity user_19 = new UserEntity("test", "test", "test_admin@test.com", "0000", 0.0, false);
 				user_19.setRole("ADMIN");
 
 

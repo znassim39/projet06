@@ -9,6 +9,7 @@ import com.salimahafirassou.paymybuddy.exception.UserDoesNotExistsException;
 public interface TransactionService {
 
 	public void transactionToBuddy(String debited_email, String credited_email, Double amount, String description) throws UserDoesNotExistsException, NotEnoughBalanceException;
+	public void transactionToUser(String debited_email, String credited_email, Double amount, String description) throws UserDoesNotExistsException;
 	public List<TransactionTableDto> getTransactionsByUser(String user_email) throws UserDoesNotExistsException;
 	
 }

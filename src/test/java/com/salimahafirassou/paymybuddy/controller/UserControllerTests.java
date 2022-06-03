@@ -46,7 +46,6 @@ public class UserControllerTests {
             .param("email", "test_register_controller_ok@test.com")
             .param("password", "0000")
             .param("confirmPassword", "0000")
-            .param("userName", "test_register_controller_ok")
             ;
 
         MvcResult result = mvc.perform(request).andReturn();
@@ -64,7 +63,6 @@ public class UserControllerTests {
             .param("email", "test_register_controller_ko_pass_match@test.com")
             .param("password", "0000")
             .param("confirmPassword", "1111")
-            .param("userName", "test_register_controller_ko_pass_match")
             ;
 
         MvcResult result = mvc.perform(request).andReturn();
@@ -82,24 +80,6 @@ public class UserControllerTests {
             .param("email", "connected_user@test.com")
             .param("password", "0000")
             .param("confirmPassword", "0000")
-            .param("userName", "test_register_controller_ko_user_exists")
-            ;
-
-        MvcResult result = mvc.perform(request).andReturn();
-
-        assertEquals("account/register", result.getModelAndView().getViewName());
-        
-    }
-    @Test
-    public void testPostRegisterKOUserNameAlreadyInUse() throws Exception {
-
-        RequestBuilder request = MockMvcRequestBuilders.post("/register")
-            .param("firstName", "test")
-            .param("lastName", "test")
-            .param("email", "test_register_controller_ko_user_name@test.com@test.com")
-            .param("password", "0000")
-            .param("confirmPassword", "0000")
-            .param("userName", "user_1")
             ;
 
         MvcResult result = mvc.perform(request).andReturn();
@@ -279,7 +259,6 @@ public class UserControllerTests {
         .param("confirmPassword", "0000")
         .param("email", "connected_user@test.com")
         .param("balance", "0.0")
-        .param("userName", "user_1")
         ;
 
         MvcResult result = mvc.perform(request).andReturn();
@@ -299,7 +278,6 @@ public class UserControllerTests {
         .param("confirmPassword", "1111")
         .param("email", "connected_user@test.com")
         .param("balance", "0.0")
-        .param("userName", "user_1")
         ;
 
         MvcResult result = mvc.perform(request).andReturn();
@@ -319,7 +297,6 @@ public class UserControllerTests {
         .param("confirmPassword", "0000")
         .param("email", "connected_user@test.com")
         .param("balance", "0.0")
-        .param("userName", "user_1")
         ;
 
         MvcResult result = mvc.perform(request).andReturn();
@@ -339,7 +316,6 @@ public class UserControllerTests {
         .param("confirmPassword", "0000")
         .param("email", "user_does_not_exist@test.com")
         .param("balance", "0.0")
-        .param("userName", "does_not_exist")
         ;
 
         MvcResult result = mvc.perform(request).andReturn();

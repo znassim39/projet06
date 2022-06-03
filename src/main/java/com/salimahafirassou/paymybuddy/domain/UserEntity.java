@@ -11,8 +11,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "user_account", uniqueConstraints = {
-		@UniqueConstraint(name = "user_unique", columnNames = { "email" }),
-		@UniqueConstraint(name = "user_name_unique", columnNames = { "userName" })
+		@UniqueConstraint(name = "user_unique", columnNames = { "email" })
 })
 public class UserEntity {
 
@@ -42,21 +41,17 @@ public class UserEntity {
 	@Column(name = "role")
 	private String role = "USER";
 
-	@Column(name = "userName")
-	private String userName;
-
 	public UserEntity() {
 	}
 
 	public UserEntity(String firstName, String lastName, String email, String password, Double balance,
-			Boolean connected, String userName) {
+			Boolean connected) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
 		this.balance = balance;
 		this.connected = connected;
-		this.userName = userName;
 	}
 
 	public Long getId() {
@@ -121,14 +116,6 @@ public class UserEntity {
 
 	public void setRole(String role) {
 		this.role = role;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
 	}
 
 }

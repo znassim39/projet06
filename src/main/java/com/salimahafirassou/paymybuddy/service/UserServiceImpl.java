@@ -4,6 +4,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -14,11 +15,11 @@ import com.salimahafirassou.paymybuddy.dto.UserLoginDto;
 import com.salimahafirassou.paymybuddy.exception.PasswordDoesNotMatchException;
 import com.salimahafirassou.paymybuddy.exception.UserAlreadyExistException;
 import com.salimahafirassou.paymybuddy.exception.UserDoesNotExistsException;
-import com.salimahafirassou.paymybuddy.exception.UserNameAlreadyInUseException;
 import com.salimahafirassou.paymybuddy.exception.WrongPassworException;
 import com.salimahafirassou.paymybuddy.repository.UserRepository;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
     
     @Autowired
@@ -28,7 +29,7 @@ public class UserServiceImpl implements UserService {
     // private PasswordEncoder passwordEncoder;
 
     @Override
-    public void register(UserDto user) throws UserAlreadyExistException, PasswordDoesNotMatchException, UserNameAlreadyInUseException {
+    public void register(UserDto user) throws UserAlreadyExistException, PasswordDoesNotMatchException {
 
         //Let's check if user already registered with us
         if(checkIfUserExist(user.getEmail())){
@@ -37,14 +38,8 @@ public class UserServiceImpl implements UserService {
         if (!user.getPassword().equals(user.getConfirmPassword())) {
             throw new PasswordDoesNotMatchException("password does not match");
         }
-        if (userRepository.findUserByUserName(user.getUserName()).isPresent()) {
-            throw new UserNameAlreadyInUseException("User Name already in use");
-        }
         UserEntity userEntity = new UserEntity();
         BeanUtils.copyProperties(user, userEntity);
-        if (userEntity.getUserName().equals("admin")) {
-            userEntity.setRole("ADMIN");
-        }
         // encodePassword(userEntity, user);
         userRepository.save(userEntity);
     }
@@ -136,10 +131,17 @@ public class UserServiceImpl implements UserService {
         profileDto.setLastName(loggedinUser.getLastName());
         profileDto.setEmail(loggedinUser.getEmail());
         profileDto.setBalance(loggedinUser.getBalance());
-        profileDto.setUserName(loggedinUser.getUserName());
         return profileDto;
     }
 
+    @Override 
+    public Boolean checkAdmin(String email) throws UserDoesNotExistsException {
+        Optional<UserEntity> existing_user = userRepository.findUserByEmail(email);
+        if (existing_user.isEmpty()) {
+            throw new UserDoesNotExistsException("User does not exist");
+        }
+        return existing_user.get().getRole().equals("ADMIN");
+    }
     // private void encodePassword( UserEntity userEntity, UserDto user){
     //     userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
     // }

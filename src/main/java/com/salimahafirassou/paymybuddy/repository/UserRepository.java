@@ -30,7 +30,4 @@ public interface UserRepository extends JpaRepository<UserEntity, Long>{
 
 	@Query("SELECT u FROM UserEntity u WHERE role <> 'ADMIN'")
 	List<UserEntity> getAllUsersForAdmin();
-
-	@Query("SELECT u FROM UserEntity u WHERE user_name = ?1")
-	Optional<UserEntity> findUserByUserName(String userName);
 }

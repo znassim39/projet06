@@ -2,6 +2,7 @@ package com.salimahafirassou.paymybuddy.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,6 +18,7 @@ import com.salimahafirassou.paymybuddy.repository.TransactionRepository;
 import com.salimahafirassou.paymybuddy.repository.UserRepository;
 
 @Service
+@Transactional
 public class TransactionServiceImpl implements TransactionService {
 
 	@Autowired
@@ -41,16 +43,41 @@ public class TransactionServiceImpl implements TransactionService {
 		}
 		UserEntity credited = existing_credited.get();
 
-		if (debited.getRole().equals("USER")) {
-
-			if (debited.getBalance() >= amount){
-				debited.setBalance(debited.getBalance() - amount);
-				userRepository.save(debited);
-			}else {
-				throw new NotEnoughBalanceException("Your balance is not enough for this operation");
-			}
+		if (debited.getBalance() >= amount){
+			debited.setBalance(debited.getBalance() - amount);
+			userRepository.save(debited);
+		}else {
+			throw new NotEnoughBalanceException("Your balance is not enough for this operation");
 		}
 		
+		credited.setBalance(credited.getBalance() + (amount * 0.95));
+		
+		userRepository.save(credited);
+
+		Transaction transaction = new Transaction();
+		transaction.setDebited(debited);
+		transaction.setCredeted(credited);
+		transaction.setAmount(amount);
+		transaction.setDescription(description);
+		transaction.setPaymentDate(new Date());
+		transactionRepository.save(transaction);
+	}
+
+	@Override
+	public void transactionToUser(String debited_email, String credited_email, Double amount, String description) 
+		throws UserDoesNotExistsException {
+		
+		Optional<UserEntity> existing_debited = userRepository.findUserByEmail(debited_email);
+		if (existing_debited.isEmpty()) {
+			throw new UserDoesNotExistsException("No user with email: " + debited_email);
+		}
+		UserEntity debited = existing_debited.get();
+		
+		Optional<UserEntity> existing_credited = userRepository.findUserByEmail(credited_email);
+		if (existing_credited.isEmpty()) {
+			throw new UserDoesNotExistsException("No user with email: " + credited_email);
+		}
+		UserEntity credited = existing_credited.get();
 		
 		credited.setBalance(credited.getBalance() + amount);
 		

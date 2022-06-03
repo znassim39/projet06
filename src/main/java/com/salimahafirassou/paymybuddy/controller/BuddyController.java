@@ -127,6 +127,12 @@ public class BuddyController {
                 model.addAttribute("buddies", buddies);
                 return "app/connection";
             }
+            if (userService.checkAdmin(connectionDto.getBuddy_email())) {
+                bindingResult.rejectValue("buddy_email", "connectionDto.buddy_email", "you cannot add admin");
+                model.addAttribute("connectionDto", connectionDto);
+                model.addAttribute("buddies", buddies);
+                return "app/connection";
+            }
             buddyService.addBuddy(
 				user_token.get(), 
 				connectionDto.getBuddy_email());
