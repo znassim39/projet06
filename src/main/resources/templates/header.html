@@ -12,7 +12,7 @@
         <div class="navbar-collapse collapse">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI().equals('/home') ? 'active':''}" href="/home">Home</a>
+                    <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI().equals('/') ? 'active':''}" href="/">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI().equals('/transfer') ? 'active':''}" href="/transfer">Transfer</a>

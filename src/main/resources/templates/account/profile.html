@@ -8,73 +8,95 @@
         <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
             <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
         </div>
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" th:field="*{firstName}" placeholder="First Name"
-                   th:errorclass="is-invalid">
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fa fa-user"></span>
+        <div class="col-4">
+            <label>First name</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" th:field="*{firstName}" placeholder="First Name"
+                    th:errorclass="is-invalid">
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fa fa-user"></span>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" th:field="*{lastName}" placeholder="Last Name"
-                   th:errorclass="is-invalid">
+        <div class="col-4">
+            <label>Last name</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" th:field="*{lastName}" placeholder="Last Name"
+                    th:errorclass="is-invalid">
 
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fa fa-user"></span>
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fa fa-user"></span>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="input-group mb-3">
-            <input type="email" class="form-control" th:field="*{email}" placeholder="Email"
-                   th:errorclass="is-invalid" readonly>
+        <div class="col-4">
+            <label>Email</label>
+            <div class="input-group mb-3">
+                <input type="email" class="form-control" th:field="*{email}" placeholder="Email"
+                    th:errorclass="is-invalid" readonly>
 
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fa fa-envelope"></span>
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fa fa-envelope"></span>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="input-group mb-3">
-            <input type="email" class="form-control" th:field="*{balance}" placeholder="Balance"
-                   th:errorclass="is-invalid" readonly>
+        <div class="col-4">
+            <label>Balance</label>
+            <div class="input-group mb-3">
+                <input class="form-control" th:field="*{balance}" placeholder="Balance"
+                    th:errorclass="is-invalid" readonly>
 
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fa fa-envelope"></span>
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span>€</span>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="input-group mb-3">
             Update password
         </div>
-        <div class="input-group mb-3">
-            <input type="password" class="form-control" th:field="*{oldPassword}" placeholder="Old Password"
-                   th:errorclass="is-invalid">
+        <div class="col-4">
+            <label>Old password</label>
+            <div class="input-group mb-3">
+                <input type="password" class="form-control" th:field="*{oldPassword}" placeholder="Old Password"
+                    th:errorclass="is-invalid">
 
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fa fa-lock"></span>
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fa fa-lock"></span>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="input-group mb-3">
-            <input type="password" class="form-control" th:field="*{newPassword}" placeholder="New Password"
-                   th:errorclass="is-invalid">
+        <div class="col-4">
+            <label>New password</label>
+            <div class="input-group mb-3">
+                <input type="password" class="form-control" th:field="*{newPassword}" placeholder="New Password"
+                    th:errorclass="is-invalid" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
+                    title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
 
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fa fa-lock"></span>
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fa fa-lock"></span>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="input-group mb-3">
-            <input type="password" class="form-control" th:field="*{confirmPassword}" placeholder="Confirm new password">
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fa fa-lock"></span>
+        <div class="col-4">
+            <label>Confirm new password</label>
+            <div class="input-group mb-3">
+                <input type="password" class="form-control" th:field="*{confirmPassword}" placeholder="Confirm new password">
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fa fa-lock"></span>
+                    </div>
                 </div>
             </div>
         </div>

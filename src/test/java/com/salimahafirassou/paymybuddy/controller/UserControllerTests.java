@@ -108,7 +108,7 @@ public class UserControllerTests {
 
         MvcResult result = mvc.perform(request).andReturn();
 
-        assertEquals("redirect:/home", result.getModelAndView().getViewName());
+        assertEquals("redirect:/", result.getModelAndView().getViewName());
         
     }
 
@@ -244,7 +244,7 @@ public class UserControllerTests {
 
         MvcResult result = mvc.perform(request).andReturn();
 
-        assertEquals("redirect:/home", result.getModelAndView().getViewName());
+        assertEquals("redirect:/", result.getModelAndView().getViewName());
         
     }
 

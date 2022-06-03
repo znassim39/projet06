@@ -31,6 +31,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public void register(UserDto user) throws UserAlreadyExistException, PasswordDoesNotMatchException {
 
+        if(user.getEmail() == null || user.getEmail().trim().equals("")){
+            throw new UserAlreadyExistException("email null!");
+        }
+        if(user.getFirstName() == null || user.getEmail().trim().equals("")){
+            throw new UserAlreadyExistException("FirstName null!");
+        }
+        if(user.getLastName() == null || user.getEmail().trim().equals("")){
+            throw new UserAlreadyExistException("LastName null!");
+        }
+        if(user.getPassword() == null || user.getEmail().trim().equals("")){
+            throw new UserAlreadyExistException("PassWord null!");
+        }
         //Let's check if user already registered with us
         if(checkIfUserExist(user.getEmail())){
             throw new UserAlreadyExistException("User already exists for this email");

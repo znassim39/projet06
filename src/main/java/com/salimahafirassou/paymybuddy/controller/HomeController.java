@@ -19,7 +19,7 @@ public class HomeController {
     @Autowired
 	UserService userService;
 
-    @GetMapping("/home")
+    @GetMapping("/")
     public String home(HttpServletRequest request) {
 
         try {

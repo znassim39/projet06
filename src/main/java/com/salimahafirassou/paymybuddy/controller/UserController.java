@@ -83,7 +83,7 @@ public class UserController {
             model.addAttribute("userLoginDto", userLoginDto);
             return "account/login";
         }
-        return "redirect:/home";
+        return "redirect:/";
     }
 
     @GetMapping("/logout")
@@ -139,7 +139,7 @@ public class UserController {
             model.addAttribute("profileDto", profileDto);
             return "account/profile";
         } catch (UserDoesNotExistsException e) {
-            return "redirect:/home";
+            return "redirect:/";
         }
     }
 

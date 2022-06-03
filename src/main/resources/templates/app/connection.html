@@ -12,7 +12,7 @@
         </div>
         <div class="row">
 
-            <form class="form-inline form-group row" th:action="@{/connection}" th:object="${connectionDto}" method="post">
+            <form class="form-inline input-group row" th:action="@{/connection}" th:object="${connectionDto}" method="post">
                 <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
                     <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
                 </div>

@@ -15,7 +15,7 @@
         </div>
         <div class="row">
 
-            <form class="form-inline form-group row" th:action="@{/transfer}" th:object="${createTransactionDto}" method="post">
+            <form class="form-inline input-group row" th:action="@{/transfer}" th:object="${createTransactionDto}" method="post">
                 <div class="col-3">
                     <select class="form-control form-select" th:field="*{credited_email}">
                         <option value="" selected>Select a connection</option>
