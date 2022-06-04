@@ -1,11 +1,10 @@
 package com.salimahafirassou.paymybuddy.dto;
 
-import java.io.Serializable;
 import java.util.List;
 
 import com.salimahafirassou.paymybuddy.domain.UserEntity;
 
-public class TransferDto implements Serializable {
+public class TransferDto {
 
     private List<TransactionTableDto> transactions;
     private List<UserEntity> connections;
@@ -22,7 +21,4 @@ public class TransferDto implements Serializable {
     public void setConnections(List<UserEntity> connections) {
         this.connections = connections;
     }
-
-    
-    
 }

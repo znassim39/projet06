@@ -28,7 +28,7 @@ public class HomeControllerTests {
     @Test
     public void testHome() throws Exception {
 
-        RequestBuilder request = MockMvcRequestBuilders.get("/home").cookie(connected_cookie);
+        RequestBuilder request = MockMvcRequestBuilders.get("/").cookie(connected_cookie);
 
         MvcResult result = mvc.perform(request).andReturn();
 
@@ -39,7 +39,7 @@ public class HomeControllerTests {
     @Test
     public void testHomeNoCookie() throws Exception {
 
-        RequestBuilder request = MockMvcRequestBuilders.get("/home");
+        RequestBuilder request = MockMvcRequestBuilders.get("/");
 
         MvcResult result = mvc.perform(request).andReturn();
 
@@ -50,7 +50,7 @@ public class HomeControllerTests {
     @Test
     public void testHomeNoToken() throws Exception {
 
-        RequestBuilder request = MockMvcRequestBuilders.get("/home").cookie(any_cookie);
+        RequestBuilder request = MockMvcRequestBuilders.get("/").cookie(any_cookie);
 
         MvcResult result = mvc.perform(request).andReturn();
 
@@ -61,7 +61,7 @@ public class HomeControllerTests {
     @Test
     public void testHomeUserNotConnected() throws Exception {
 
-        RequestBuilder request = MockMvcRequestBuilders.get("/home").cookie(disconnected_cookie);
+        RequestBuilder request = MockMvcRequestBuilders.get("/").cookie(disconnected_cookie);
 
         MvcResult result = mvc.perform(request).andReturn();
 
@@ -72,7 +72,7 @@ public class HomeControllerTests {
     @Test
     public void testHomeUserDoesNotExists() throws Exception {
 
-        RequestBuilder request = MockMvcRequestBuilders.get("/home").cookie(does_not_exist_cookie);
+        RequestBuilder request = MockMvcRequestBuilders.get("/").cookie(does_not_exist_cookie);
 
         MvcResult result = mvc.perform(request).andReturn();
 

@@ -24,6 +24,7 @@ public class BuddyControllerTests {
     private Cookie disconnected_cookie = new Cookie("user_email", "disconnected_user@test.com");
     private Cookie does_not_exist_cookie = new Cookie("user_email", "user_does_not_exist@test.com");
     private Cookie any_cookie = new Cookie("hello", "world");
+    private Cookie admin_Cookie = new Cookie("user_email", "test_admin@test.com");
 
     @Test
     public void testContacts() throws Exception {
@@ -33,6 +34,17 @@ public class BuddyControllerTests {
         MvcResult result = mvc.perform(request).andReturn();
 
         assertEquals("app/connection", result.getModelAndView().getViewName());
+        
+    }
+
+    @Test
+    public void testContactsAdmin() throws Exception {
+
+        RequestBuilder request = MockMvcRequestBuilders.get("/connection").cookie(admin_Cookie);
+
+        MvcResult result = mvc.perform(request).andReturn();
+
+        assertEquals("app/connection_admin", result.getModelAndView().getViewName());
         
     }
 

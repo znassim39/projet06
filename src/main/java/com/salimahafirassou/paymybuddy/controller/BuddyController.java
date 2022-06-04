@@ -52,6 +52,10 @@ public class BuddyController {
                 return "redirect:/login";
             }
 
+            if (userService.checkAdmin(user_token.get())) {
+                return "app/connection_admin";
+            }
+
             List<UserEntity> buddies = buddyService.listMyBudies(user_token.get());
             model.addAttribute("buddies", buddies);
             model.addAttribute("connectionDto", new ConnectionDto());

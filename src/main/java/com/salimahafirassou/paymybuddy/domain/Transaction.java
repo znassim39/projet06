@@ -57,7 +57,7 @@ public class Transaction {
 	public Transaction(UserEntity credeted, UserEntity debited, Date paymentDate, Double amount, String description) {
 		this.credeted = credeted;
 		this.debited = debited;
-		this.paymentDate = paymentDate;
+		this.paymentDate = new Date(paymentDate.getTime());
 		this.amount = amount;
 		this.description = description;
 	}
@@ -77,8 +77,8 @@ public class Transaction {
 	public UserEntity getDebited() { return debited; }
 	public void setDebited(UserEntity debited) { this.debited = debited; }
 	
-	public Date getPaymentDate() { return paymentDate; }
-	public void setPaymentDate(Date paymentDate) { this.paymentDate = paymentDate; }
+	public Date getPaymentDate() { return new Date(paymentDate.getTime()); }
+	public void setPaymentDate(Date paymentDate) { this.paymentDate = new Date(paymentDate.getTime()); }
 
 	public String getDescription() { return description; }
 	public void setDescription(String description) { this.description = description; }

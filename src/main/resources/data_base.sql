@@ -6,7 +6,6 @@ CREATE TABLE public.user_account
 (
     id bigint NOT NULL,
     balance double precision,
-    bank_account character varying(255) COLLATE pg_catalog."default",
     connected boolean,
     email character varying(255) COLLATE pg_catalog."default",
     first_name character varying(255) COLLATE pg_catalog."default",

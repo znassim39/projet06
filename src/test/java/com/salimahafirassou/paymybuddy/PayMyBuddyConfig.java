@@ -58,7 +58,7 @@ public class PayMyBuddyConfig {
 				UserEntity user_17 = new UserEntity("test", "test", "connected_logout_user@test.com", "0000", 0.0, true);
 				UserEntity user_18 = new UserEntity("test", "test", "test_login_controller_user@test.com", "0000", 0.0, false);
 
-				UserEntity user_19 = new UserEntity("test", "test", "test_admin@test.com", "0000", 0.0, false);
+				UserEntity user_19 = new UserEntity("test", "test", "test_admin@test.com", "0000", 0.0, true);
 				user_19.setRole("ADMIN");
 
 
